@@ -8,6 +8,22 @@ lang -> Lenguaje de la página.
 description -> Copete que se muestra en la busqueda de Google.
 keyword -> palabras clave de búsqueda separadas por coma.
 Listas:
-1) Desordenadas -> ul
-2) Ordenadas -> ol
-3) de Definicion
+1) Desordenadas -> ul + li
+2) Ordenadas -> ol + li
+3) de Definiciones -> dl + dt (term) + dd (definition)
+ul>li*3 arma una lista desordenada de 3 filas
+emmet cheat sheet
+table -> crea una tabla, con la propiedad border defino la cantidad de px de los bordes de la tabla.
+tr -> Fila, contiene
+th -> Enbcabezado
+td -> Detalle
+colspan, rowspan -> Expande el dato n posiciones
+caption -> Título de la tabla
+select -> Lista desplegable, contiene:
+option -> cada elemento de la lista desplegable.
+value -> propiedad de option que guarda el identificador de cada elemento de la lista.
+Etiquetas contenedoras: No se ve el efecto en la pantalla, encierro un grupo de etiquetas para aplicar un estilo o propiedad particular.
+div -> etiqueta contenedora de bloque
+span -> etiqueta contenedora inline
+&nbsp; -> Caracter especial HTML que indica espacio en blanco. Se utiliza si necesito escribir más de un espacio en blanco consecutivo.
+pre -> etiqueta para escribir un párrafo literal con el formato que especificamos.
