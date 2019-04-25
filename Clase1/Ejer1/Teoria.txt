@@ -1,0 +1,13 @@
+p>lorem*n --> n líneas con lorem ipsum
+ctrl+shift+p --> Abro consola de shortcuts
+Utilizar <br> no es una buena práctica.
+viewport->Se refiere a la página visible en la pantalla
+width=device-width -> Que ocupe el ancho de la pantalla del dispositivo.
+initial-scale=1.0 -> que se muestre al 100%, es decir sin zoom.
+lang -> Lenguaje de la página.
+description -> Copete que se muestra en la busqueda de Google.
+keyword -> palabras clave de búsqueda separadas por coma.
+Listas:
+1) Desordenadas -> ul
+2) Ordenadas -> ol
+3) de Definicion
