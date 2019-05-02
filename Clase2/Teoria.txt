@@ -9,3 +9,4 @@ type="text" -> Igual a text pero enmascara los caracteres.
 con fieldset agrupo controles dentro de un form. Con legend agrego un título.
 type="submit" -> Botón para enviar datos al servidor. Con value cambio el caption que completa el navegador automáticamente.
 En SPA para bloquear el comportamiento estandar del control submit, mediante JS con manejador en el evento load de la página atrapamos el evento submit.
+type="reset" -> Limpia los datos del formulario.

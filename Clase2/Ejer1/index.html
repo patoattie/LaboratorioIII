@@ -13,13 +13,29 @@
             <legend>Login</legend>
 
             <label for="txtNombre">Nombre:</label>
-            <input type="text" id="txtNombre" name="nombre" placeholder="Ingrese nombre aquí"><br><br>
+            <input type="text" id="txtNombre" name="nombre" placeholder="Ingrese nombre aquí" required><br><br>
     
             <label for="txtClave">Password:</label>
             <input type="password" id="txtClave" name="clave" placeholder="Ingrese clave aquí">
         </fieldset>
 
-        <input type="submit" value="Loguearse">
+        <label for="chkCss">CSS:</label>
+        <input type="checkbox" name="css" id="chkCss">
+        <label for="chkJs">JS:</label>
+        <input type="checkbox" name="js" id="chkJs">
+        <label for="chkHtml">HTML:</label>
+        <input type="checkbox" name="html" id="chkHtml">
+
+        <fieldset>
+            <legend>Sexo</legend>
+            <label for="rdoFemenino">Femenino:</label>
+            <input type="radio" name="sexo" id="rdoFemenino">
+            <label for="rdoMasculino">Masculino:</label>
+            <input type="radio" name="sexo" id="rdoMasculino">
+        </fieldset>
+
+        <br><br><input type="submit" value="Loguearse">
+        <input type="reset" value="Limpiar">
     </form>
 
     <div id="info">

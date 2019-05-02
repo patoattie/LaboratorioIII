@@ -19,5 +19,32 @@ function manejarSubmit(e)
     informacion += "Nombre: " + document.getElementById('txtNombre').value + "<br>";
     informacion += "Contraseña: " + document.getElementById('txtClave').value;
 
+    if (document.getElementById('chkCss').checked) //si checked es true es que está chequeado.
+    {
+        informacion += "<br>Sabe CSS";
+    }
+    else
+    {
+        informacion += "<br>No sabe CSS";
+    }
+
+    if (document.getElementById('chkJs').checked) //si checked es true es que está chequeado.
+    {
+        informacion += "<br>Sabe JS";
+    }
+    else
+    {
+        informacion += "<br>No sabe JS";
+    }
+
+    if (document.getElementById('chkHtml').checked) //si checked es true es que está chequeado.
+    {
+        informacion += "<br>Sabe HTML";
+    }
+    else
+    {
+        informacion += "<br>No sabe HTML";
+    }
+
     document.getElementById('info').innerHTML = informacion;
 }
