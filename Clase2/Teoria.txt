@@ -7,6 +7,7 @@ si especificamos readonly el control queda como solo lectura.
 si especificamos disabled es igual a readonly con la diferencia que el control no puede tomar el foco.
 type="text" -> Igual a text pero enmascara los caracteres.
 con fieldset agrupo controles dentro de un form. Con legend agrego un título.
+type="file" -> Selector de archivos.
 type="submit" -> Botón para enviar datos al servidor. Con value cambio el caption que completa el navegador automáticamente.
 En SPA para bloquear el comportamiento estandar del control submit, mediante JS con manejador en el evento load de la página atrapamos el evento submit.
 type="reset" -> Limpia los datos del formulario.
@@ -26,3 +27,9 @@ CSS
 
 El selector universal se utiliza para desactivar los estilos por defecto de cada navegador y que la página se vea igual en todos independientemente.
 Los selectores más específicos predominan sobre los menos específicos.
+
+Colores:
++ mediante nombre (constante predefinida)
++ rgb(red, green, blue) -> cada atributo tiene 8 bits (0 a 255)
++ rgba -> igual que rgb pero agrega un parámetro de transparencia que va de 0 (completamente transparente) a 1 (completamente opaco).
++ hexadecimal -> antepone numeral y asigna dos dígitos a cada color, desde 00 a ff.

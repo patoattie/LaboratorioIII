@@ -19,7 +19,9 @@ h1 /*Selector de etiqueta, especificidad baja*/
 
 p
 {
-    background-color: beige;
+    /*background-color: rgba(255, 0, 0, .15);*/
+    background-color: rgba(100%, 0%, 0%, 15%);
+    /*background-color: #ff0000 (es el más utilizado junto con el rgb)*/;
 }
 
 #enlace /*Selector de id, especificidad alta*/
@@ -31,6 +33,13 @@ p span /*Todas las etiquetas span que están dentro de una etiqueta p*/
 {
     color: orange;
 }
+
+/*
+p > span Todas las etiquetas span son hijas directas de una etiqueta p
+{
+    color: orange;
+}
+*/
 
 * /*Selector universal, especificidad nula*/
 {
