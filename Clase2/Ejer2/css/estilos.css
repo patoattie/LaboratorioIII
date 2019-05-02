@@ -1,0 +1,38 @@
+/* No existe el comentario // en CSS*/ 
+
+/*
+h1, p  Encadenamiento en selector de etiquetas
+{
+    color:blue;
+}
+*/
+
+.azul /*Selector de clase, especificidad media*/
+{
+    color: blue;
+}
+
+h1 /*Selector de etiqueta, especificidad baja*/
+{
+    background-color: lightblue;
+}
+
+p
+{
+    background-color: beige;
+}
+
+#enlace /*Selector de id, especificidad alta*/
+{
+    color: red;
+}
+
+p span /*Todas las etiquetas span que están dentro de una etiqueta p*/
+{
+    color: orange;
+}
+
+* /*Selector universal, especificidad nula*/
+{
+    color: brown;
+}

@@ -17,3 +17,12 @@ section -> Sección de la página -> h2...
 article -> Artículo dentro de una sección. -> h3...
 footer -> Pie de la página.
 aside -> Contenido lateral con publicidad o vínculos a otras páginas.
+
+CSS
++ Selector de etiqueta (* es el selector universal)
+  Selector de clase, se antepone un punto.
+  Selector de id, se antepone un numeral.
++ Declaración -> Propiedad: valor;
+
+El selector universal se utiliza para desactivar los estilos por defecto de cada navegador y que la página se vea igual en todos independientemente.
+Los selectores más específicos predominan sobre los menos específicos.
