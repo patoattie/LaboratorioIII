@@ -1,0 +1,11 @@
+En la propiedad action del form va la URL de quién recibe los datos del formulario
+input (etiqueta self-closing)
+type="text" -> Es un control textbox. Tiene que tener obligatoriamente la propiedad name si envía datos a un servidor, con dicha propiedad se recuperan los datos en el servidor.
+label -> Entre apertura y cierre va el caption de la etiqueta. La propiedad for tiene que tener el mismo id que el control al que se asocia. Se puede anidar el control dentro del label pero no es una buena práctica.
+en el placeholder se especifica la leyenda que muestra el control cuando no tiene datos cargados, pero no forma parte del value.
+si especificamos readonly el control queda como solo lectura.
+si especificamos disabled es igual a readonly con la diferencia que el control no puede tomar el foco.
+type="text" -> Igual a text pero enmascara los caracteres.
+con fieldset agrupo controles dentro de un form. Con legend agrego un título.
+type="submit" -> Botón para enviar datos al servidor. Con value cambio el caption que completa el navegador automáticamente.
+En SPA para bloquear el comportamiento estandar del control submit, mediante JS 
