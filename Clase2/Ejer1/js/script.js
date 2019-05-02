@@ -46,5 +46,14 @@ function manejarSubmit(e)
         informacion += "<br>No sabe HTML";
     }
 
+    if (document.getElementById('rdoMasculino').checked) //si checked es true es que está chequeado.
+    {
+        informacion += "<br>Sexo Masculino";
+    }
+    else
+    {
+        informacion += "<br>Sexo Femenino";
+    }
+
     document.getElementById('info').innerHTML = informacion;
 }
