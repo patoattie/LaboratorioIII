@@ -4,6 +4,7 @@ margin, border, y padding tienen 4 propiedades (left, right, top, bottom)
 Todas tienen un short-hand, se pueden aplicar individualmente a cada una de las cuatro.
 Si se pasan tres parametros, el primero es top, el segundo es right + left, y el tercero es bottom.
 Si se pasan dos parametros, el primero es top + bottom y el segundo es right + left.
+con auto en los parametros left y right centra el elemento horizontalmente.
 Si se pasa un parametro, todos valen lo mismo.
 El margen no forma parte del modelo de caja.
 https://caniuse.com/ -> para probar si una funcionalidad esta soportada por el navegador.
@@ -14,3 +15,20 @@ position:
     relative->relativo a la ubicacion original que le asigna el navegador, en relacion con los valores que asignemos para left top right bottom. El resto de los elementos no ocupan la posicion del elemento relativo.
     absolute->relativo al contenedor. Los demas elementos no respetan la ubicacion original del elemento absoluto y la ocupan.
     fixed->caso especial de absolute, en el que el elemento queda fijo cuando se escrolea la pantalla.
+    sticky->igual que fixed pero conserva el lugar, tal como si fuera relative.
+float->eleva un elemento por sobre el resto y lo alinea.
+clear->
+display
+    none: No muestra el elemento. Es como si no existiera.
+visibility
+    hidden: No muestra el elemento pero el navegador lo renderiza y ocupa espacio como si existiera. No se suele usar por una cuestión estetica.
+
+Etiquetas semanticas: vienen desde HTML5
+Tienen un comportamiento similar al div y se introdujeron para darle significado a las secciones cuando se ve el codigo HTML. Tienen un sentido tambien para los motores de busqueda.
+Header -> Logo de la empresa. Encabezado de la pagina.
+Nav-> Menu de navegacion
+Footer->Redes sociales de la empresa, copyrights, etc. Es el pie de pagina.
+main->Titulo principal y contenido de la pagina. Dentro del main van:
+section-> Agrupamiento de articulos.
+article-> Cada articulo
+aside->barra lateral que se usa para contenidos no relacionados directamente con el sitio. Por ejemplo para mostrar publicidad o contenidos de redes sociales.

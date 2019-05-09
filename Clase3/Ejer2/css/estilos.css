@@ -1,0 +1,37 @@
+.cabecera
+{
+    height: 50px;
+    background-color: brown;
+}
+.menu
+{
+    height: 30px;
+    background-color: lightgreen;
+}
+.cuerpo
+{
+    height: 300px;
+}
+.publicidad
+{
+    height: 100%;
+    width: 20%;
+    margin-right: 0px;
+    float: right;
+    background-color: cyan;
+}
+.principal
+{
+    height: 100%;
+    width: 80%;
+    float: right;
+    background-color: orange;
+}
+.seccion
+{
+    margin: auto;
+    background-color: azure;
+    margin: 10px;
+    height: fit-content;
+    position: relative;
+}

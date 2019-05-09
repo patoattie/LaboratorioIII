@@ -36,10 +36,7 @@ h1
 #caja2
 {
     background-color: green;
-    position: fixed;
-    left: 200px;
-    top: 200px;
-    /*opacity: .5;*/
+    display: none;
 }
 
 #caja3
@@ -52,6 +49,6 @@ h1
     width: 40px;
     height: 40px;
     background-color: orange;
-    position: absolute;
+    /*position: absolute;*/
     top: 10px;
 }
