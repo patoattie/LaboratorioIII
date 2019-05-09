@@ -1,0 +1,7 @@
+En el modelo de caja la imagen (background-image) siempre va por delante del color de fondo (background-color)
+El normalizador resetea los estilos para independizar el modelo de browser que se use y quede el diseño uniforme.
+margin, border, y padding tienen 4 propiedades (left, right, top, bottom)
+Todas tienen un shortcut, se pueden aplicar individualmente a cada una de las cuatro.
+Si se pasan tres parametros, el primero es top, el segundo es right + left, y el tercero es bottom.
+Si se pasan dos parametros, el primero es top + bottom y el segundo es right + left.
+Si se pasa un parametro, todos valen lo mismo.
