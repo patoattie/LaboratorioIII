@@ -1,17 +1,55 @@
-*
+body
 {
-    /*border: 0px;
-    margin: 0px;
-    padding: 0px;*/
+    background-image: url("../image/blue-burst.png");
 }
-
 h1
 {
-    border: 0px;
-    margin: 0px;
+    border: 2px solid green; /* shorthand -> primero el tamaño luego indistintamente estilo y color*/
+    border-bottom-color: pink; /*customizo la diferencia*/
+    margin: 20px;
     padding: 0px;
     background-color: lightblue;
     width: 300px;
+    height: 150px;
+    padding: 10px 20px 30px 40px;
+    box-sizing: border-box;
+}
+/*
+.😻
+{
+    background-color: blue;
+    width: 50px;
+    height: 50px;
+}*/
+
+.tam
+{
+    width: 100px;
     height: 100px;
-    /*padding: */
+}
+
+#caja1
+{
+    background-color: red;
+}
+
+#caja2
+{
+    background-color: green;
+    position: absolute;
+    /*left: 50px;*/
+    top: 20px;
+    /*opacity: .5;*/
+}
+
+#caja3
+{
+    background-color: blue;
+}
+
+.cajita
+{
+    width: 40px;
+    height: 40px;
+    background-color: orange;
 }
