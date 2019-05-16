@@ -81,12 +81,81 @@ var persona3 = {nombre:"Jose", apellido:"Perez"};
 console.log(persona3.apellido + ", " + persona3.nombre);
 */
 
-function Persona(nombre, apellido, edad) //Constructor del objeto Persona
+/*function Persona(nombre, apellido, edad) //Constructor del objeto Persona
 {
     this.nombre = nombre;
     this.apellido = apellido;
     this.edad = edad;
 }
 
+Persona.prototype.DNI = 1234; //Agrego un parametro a nivel de "clase" (prototype)
+
 var persona1 = new Persona("Jose", "Perez", 39);
+var persona2 = new Persona("Ana", "Gomez", 28);
+var persona3 = new Persona("Oscar", "Garcia", 55);
+var prop = "apellido";
 console.log(persona1.apellido + ", " + persona1.nombre + " - Edad: " + persona1.edad);
+console.log(persona2[prop] + ", " + persona2["nombre"] + " - Edad: " + persona2["edad"]);
+
+for(propiedad in persona3)
+{
+    console.log(propiedad + ": " + persona3[propiedad]);
+}
+persona3.localidad = "Avellaneda";
+console.log(Object.keys(persona3));
+console.log(Object.keys(persona3).length);
+console.log(Object.keys(persona2));
+console.log(Object.keys(persona2).length);
+*/
+
+//Manejador de eventos viejo
+/*window.onload = function()
+{
+    function cambiarTexto(e)
+    {
+        e.target.innerHTML = "Otro parrafo";
+    }
+    
+    var parrafo = document.getElementsByTagName("p")[0];
+    
+    parrafo.onclick = cambiarTexto;
+}*/
+
+//Manejador de eventos estandar W3C
+addEventListener("load", asignarManejadores, false); //es de la clase window, mismo criterio que alert
+
+//true -> Encadenamiento de eventos natural (de padre a hijos descendente y luego de hijo a padre ascendente)
+//false -> Encadenamiento de eventos corto (de hijo a padre ascendente solamente)
+
+function asignarManejadores()
+{
+    document.getElementById("p1").addEventListener("click", cambiarTexto, false);
+    document.getElementById("div1").addEventListener("click", cambiarColor, false);
+    document.getElementsByTagName("body")[0].addEventListener("click", cambiarColorFondo, false);
+    document.getElementById("p1").addEventListener("dblclick", resetearTexto, false);
+}
+
+function cambiarTexto(e)
+{
+    //e.target.innerHTML = "Otro parrafo";
+    alert("p");
+}
+
+function resetearTexto(e)
+{
+    e.target.innerHTML = "Esto es un parrafo";
+    e.target.style.color = "black";
+    e.target.style.backgroundColor = "white";
+}
+
+function cambiarColor(e)
+{
+    e.target.style.color = "green";
+    alert("div");
+}
+
+function cambiarColorFondo(e)
+{
+    e.target.style.backgroundColor = "red";
+    alert("body");
+}
