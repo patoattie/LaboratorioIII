@@ -137,7 +137,7 @@ function asignarManejadores()
 
 function cambiarTexto(e)
 {
-    //e.target.innerHTML = "Otro parrafo";
+    e.target.innerHTML = "Otro parrafo";
     alert("p");
 }
 
