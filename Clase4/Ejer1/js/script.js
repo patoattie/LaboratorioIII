@@ -38,3 +38,55 @@ var x = function (nombre)
 }; //funcion anonima con delegado (x)
 
 //(function(nombre) {alert("Hola " + nombre)})("Julio"); //funcion autoinvocada.
+
+var unaFuncion = new Function("a", "b", "return a + b"); //funcion constructora
+
+function f1 (a, b)
+{
+    //if (!b) //Si b es undefined entonces valida la comparacion como false
+    if (typeof b != "number")
+    {
+        b = 1;
+    }
+    return a * b;
+}
+
+function f2 ()
+{
+    console.log(arguments);
+}
+
+//alert(unaFuncion(6, 7));
+//alert(f1(4,"2"));
+//f2(23, "juan", true, -5);
+
+/*var v1;
+var v2 = null;
+console.log(v1 == v2); //true
+console.log(v1 === v2); //false
+*/
+
+/*var persona1 = {};
+var persona2 = new Object();
+
+persona1.nombre = "Juan";
+persona1.Saludar = function()
+{
+    return "Hola, soy " + this.nombre;
+};
+
+//alert(persona1.Saludar());
+
+var persona3 = {nombre:"Jose", apellido:"Perez"};
+console.log(persona3.apellido + ", " + persona3.nombre);
+*/
+
+function Persona(nombre, apellido, edad) //Constructor del objeto Persona
+{
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.edad = edad;
+}
+
+var persona1 = new Persona("Jose", "Perez", 39);
+console.log(persona1.apellido + ", " + persona1.nombre + " - Edad: " + persona1.edad);
