@@ -16,13 +16,11 @@ body
 .cuerpo
 {
     height: 75%;/*300px;*/
-    position: relative;
 }
 .publicidad
 {
     height: 100%;
     width: 20%;
-    margin-right: 0px;
     float: right;
     background-color: cyan;
 }
