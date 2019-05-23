@@ -8,7 +8,8 @@ addEventListener("load", function()
 function ejecutar()
 {
     var parrafo = document.getElementsByTagName("p")[0];
-    console.log(parrafo);
-    var div = parrafo.parentNode;
-    console.log(div);
+    //console.log(parrafo);
+    var padre = parrafo.parentNode; //devuelve el nodo padre
+    //console.log(padre);
+    padre.style.backgroundColor = "blue";
 }
