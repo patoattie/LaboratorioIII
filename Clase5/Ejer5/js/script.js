@@ -1,5 +1,6 @@
 var boton;
 var boton2;
+var contador = 1;
 
 addEventListener("load", function()
 {
@@ -22,20 +23,31 @@ function ejecutar()
     //div.appendChild(parrafo);
     enlace.setAttribute("href", "http://www.google.com.ar"); //Agrego el atributo href
     enlace.setAttribute("target", "_blank"); //Agrego el atributo target para que abra el enlace en una nueva pestaña
-    enlace.setAttribute("id", "a1");
+    //enlace.setAttribute("class", "red");
+    enlace.classList.add("red"); //Agrego varias clases a un solo elemento
+    enlace.classList.add("white");
+    enlace.setAttribute("id", "a" + contador);
+    contador++;
 
     div.appendChild(enlace);
 }
 
 function ejecutar2()
 {
-    var enlace = document.getElementById("a1");
-    console.log(enlace.getAttribute("href"));
+    var enlaces = document.getElementsByTagName("a");
+    /*console.log(enlace.getAttribute("href"));
 
-    if (document.getElementById("a1").hasAttribute("href"))
+    if (enlace.hasAttribute("href"))
     {
-        document.getElementById("a1").removeAttribute("href"); //Remuevo el atributo href
+        enlace.setAttribute("class", "blue");
+        enlace.removeAttribute("href"); //Remuevo el atributo href
     }
 
-    console.log(enlace.getAttribute("href"));
+    console.log(enlace.getAttribute("href"));*/
+
+    for (var i = 0; i < enlaces.length; i++)
+    {
+        enlaces[i].classList.toggle("red");
+        enlaces[i].classList.toggle("white");
+    }
 }
