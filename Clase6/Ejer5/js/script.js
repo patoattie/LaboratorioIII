@@ -26,6 +26,7 @@ function traerPersona()
     {
         if(this.readyState == XMLHttpRequest.DONE) //XMLHttpRequest.DONE = 4
         {
+            info.innerHTML = "";
             if(this.status == 200) // Estado OK
             {
                 personas = JSON.parse(this.responseText); //Respuesta de texto del servidor (JSON), lo convierto a objeto
@@ -35,12 +36,12 @@ function traerPersona()
                     info.innerHTML += "<p>" + personaToString(personas[i]) + "</p>";
                 }
             }
-            else
-            {
-                info.appendChild(spinner);
-            }
         }
-    };
+        else
+        {
+            info.appendChild(spinner);
+        }
+};
 
     xhr.open("GET", "http://localhost:3000/traerPersonas", true); // true para que sea asincronico, debe ir el protocolo en forma explicita
     xhr.send(); //se envia la peticion al servidor

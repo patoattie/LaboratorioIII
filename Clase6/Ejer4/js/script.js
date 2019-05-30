@@ -32,12 +32,12 @@ function traerPersona()
                 txtApellido.value = persona.apellido;
                 txtEdad.value = persona.edad;
             }
-            else
-            {
-                info.appendChild(spinner);
-            }
         }
-    };
+        else
+        {
+            info.appendChild(spinner);
+        }
+};
 
     xhr.open("GET", "http://localhost:3000/traerJSON", true); // true para que sea asincronico, debe ir el protocolo en forma explicita
     xhr.send(); //se envia la peticion al servidor
