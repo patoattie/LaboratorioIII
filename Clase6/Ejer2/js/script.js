@@ -13,10 +13,15 @@ function capturarSubmit()
 {
     var nombre = document.getElementById("txtNombre").value;
     var apellido = document.getElementById("txtApellido").value;
+    var datos = "nombre=" + nombre + "&apellido=" + apellido;
     var xhr = new XMLHttpRequest();
     var info = document.getElementById("info");
+    info.innerHTML = "";
     var spinner = document.createElement("img");
     spinner.setAttribute("src", "image/preloader.gif");
+    spinner.setAttribute("alt", "Espere mientras se procesa la petición...");
+    spinner.setAttribute("height", "48px");
+    spinner.setAttribute("width", "48px");
 
     xhr.onreadystatechange = function() //0 al 4 son los estados, 4 es el estado DONE
     {
@@ -33,6 +38,6 @@ function capturarSubmit()
         }
     };
 
-    xhr.open("GET", "http://localhost:3000/enviarDatos?nombre=" + nombre + "&apellido=" + apellido, true); // true para que sea asincronico, debe ir el protocolo en forma explicita
+    xhr.open("GET", "http://localhost:3000/enviarDatos?" + datos, true); // true para que sea asincronico, debe ir el protocolo en forma explicita
     xhr.send(); //se envia la peticion al servidor
 }
