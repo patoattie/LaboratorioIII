@@ -17,9 +17,12 @@
 		},
 		{
 			"path": "Material"
+		},
+		{
+			"path": "Clase6"
 		}
 	],
 	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "Clase5"
+		"liveServer.settings.multiRootWorkspaceName": "Clase6"
 	}
 }
