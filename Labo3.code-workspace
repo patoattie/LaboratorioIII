@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": "Clase1"
+		},
+		{
+			"path": "Clase2"
+		},
+		{
+			"path": "Clase3"
+		},
+		{
+			"path": "Clase4"
+		},
+		{
+			"path": "Clase5"
+		},
+		{
+			"path": "Material"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Clase5"
+	}
+}
