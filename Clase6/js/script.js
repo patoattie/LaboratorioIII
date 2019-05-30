@@ -6,6 +6,7 @@ function ejecutar()
     {
         if(this.readyState == XMLHttpRequest.DONE) //XMLHttpRequest.DONE = 4
         {
+            console.log("1");
             if(this.status == 200) // Estado OK
             {
                 document.getElementById("info").innerHTML = this.responseText; //Archivo de texto del servidor
@@ -13,5 +14,6 @@ function ejecutar()
         }
     };
 
-    xhr.open("GET", "localhost:3000/lista.txt", true);
+    xhr.open("GET", "http://localhost:3000/lista.txt", true); // true para que sea asincronico, debe ir el protocolo en forma explicita
+    xhr.send(); //se envia la peticion al servidor
 }
