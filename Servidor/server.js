@@ -56,9 +56,11 @@ app.get("/traerPersonasArray", function (request, response) {
 });
 
 app.post('/enviarDatos', (request, response) => {
-  console.log("Post: " + request.body.nombre + ' ' + request.body.apellido); /* This prints the  JSON document received (if it is a JSON document) */
-  response.send(request.body.nombre + ' ' + request.body.apellido);
-
+  setTimeout(function()
+    {
+      console.log("Post: " + request.body.nombre + ' ' + request.body.apellido); /* This prints the  JSON document received (if it is a JSON document) */
+      response.send(request.body.nombre + ' ' + request.body.apellido);
+    }, 3000);
 });
 
 app.post('/altaPersona', (request, response) => {
