@@ -22,8 +22,11 @@ app.use(express.static(__dirname + '/public'));
 app.use(parser.urlencoded({ extended: true }));
 
 app.get("/enviarDatos", function (request, response) {
-  console.log("Get: " + request.query.nombre + ' ' + request.query.apellido); /* This prints the  JSON document received (if it is a JSON document) */
-  response.send(request.query.nombre + ' ' + request.query.apellido);
+  setTimeout(function()
+    {
+      console.log("Get: " + request.query.nombre + ' ' + request.query.apellido); /* This prints the  JSON document received (if it is a JSON document) */
+      response.send(request.query.nombre + ' ' + request.query.apellido);
+    }, 3000);
 });
 
 app.get("/traerJSON", function (request, response) {

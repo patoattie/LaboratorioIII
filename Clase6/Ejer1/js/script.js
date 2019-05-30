@@ -6,7 +6,6 @@ function ejecutar()
     {
         if(this.readyState == XMLHttpRequest.DONE) //XMLHttpRequest.DONE = 4
         {
-            console.log("1");
             if(this.status == 200) // Estado OK
             {
                 document.getElementById("info").innerHTML = this.responseText; //Archivo de texto del servidor
