@@ -79,6 +79,8 @@ function crearCabecera(tabla, personas)
     var columna;
     var texto;
     tabla.appendChild(filaCabecera);
+    columna = document.createElement("th");
+    filaCabecera.appendChild(columna);
     for(atributo in personas[0])
     {
         columna = document.createElement("th");
@@ -97,6 +99,10 @@ function crearDetalle(tabla, personas)
         var columna;
         var texto;
         tabla.appendChild(filaCabecera);
+        columna = document.createElement("input");
+        columna.setAttribute("type", "radio");
+        columna.setAttribute("name", "selector");
+        filaCabecera.appendChild(columna);
         for(atributo in personas[i])
         {
             columna = document.createElement("td");
