@@ -31,6 +31,11 @@ function traerPersona()
             {
                 personas = JSON.parse(this.responseText); //Respuesta de texto del servidor (JSON), lo convierto a objeto
                 crearTabla(personas);
+
+                document.getElementById("btnGetPersona").setAttribute("disabled", "");
+                document.getElementById("btnAltaPersona").removeAttribute("disabled", "");
+                document.getElementById("btnEditarPersona").removeAttribute("disabled", "");
+
                 /*for(var i in personas)
                 {
                     info.innerHTML += "<p>" + personaToString(personas[i]) + "</p>";
