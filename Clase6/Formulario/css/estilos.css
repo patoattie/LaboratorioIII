@@ -1,0 +1,10 @@
+table
+{
+    border-collapse: collapse;
+}
+
+.filaSeleccionada
+{
+    color: white;
+    background-color: blue;
+}

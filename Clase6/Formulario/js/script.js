@@ -71,7 +71,7 @@ function crearTabla(personas)
     var div = document.getElementById("info");
     var tabla = document.createElement("table");
     tabla.setAttribute("border", "1px");
-    tabla.setAttribute("border-collapse", "collapse");
+    //tabla.setAttribute("border-collapse", "collapse");
     div.appendChild(tabla);
     crearCabecera(tabla, personas);
     crearDetalle(tabla, personas);
@@ -102,18 +102,42 @@ function crearDetalle(tabla, personas)
         var filaCabecera = document.createElement("tr");
         var atributo;
         var columna;
+        var radio;
         var texto;
         tabla.appendChild(filaCabecera);
-        columna = document.createElement("input");
-        columna.setAttribute("type", "radio");
-        columna.setAttribute("name", "selector");
+        columna = document.createElement("td");
         filaCabecera.appendChild(columna);
+        radio = document.createElement("input");
+        radio.setAttribute("type", "radio");
+        radio.setAttribute("name", "selector");
+        radio.addEventListener("change", pintarFila, false);
+        columna.appendChild(radio);
         for(atributo in personas[i])
         {
             columna = document.createElement("td");
             filaCabecera.appendChild(columna);
             texto = document.createTextNode(personas[i][atributo]);
             columna.appendChild(texto);
+        }
+    }
+}
+
+function pintarFila()
+{
+    var seleccionado = document.getElementsByTagName("input");
+
+    for (var i = 0; i < seleccionado.length; i++)
+    {
+        if(seleccionado[i].checked)
+        {
+            seleccionado[i].parentElement.parentElement.className = "filaSeleccionada";
+        }
+        else
+        {
+            if(seleccionado[i].parentElement.parentElement.className === "filaSeleccionada")
+            {
+                seleccionado[i].parentElement.parentElement.className = "";
+            }
         }
     }
 }
