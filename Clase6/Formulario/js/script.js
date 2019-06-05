@@ -1,4 +1,5 @@
 addEventListener("load", asignarManejadores, false);
+var idSeleccionado;
 
 function asignarManejadores()
 {
@@ -32,7 +33,7 @@ function traerPersona()
                 personas = JSON.parse(this.responseText); //Respuesta de texto del servidor (JSON), lo convierto a objeto
                 crearTabla(personas);
 
-                document.getElementById("btnGetPersona").setAttribute("disabled", "");
+                document.getElementById("btnGetPersona").removeAttribute("disabled", "");
                 document.getElementById("btnAltaPersona").removeAttribute("disabled", "");
                 document.getElementById("btnEditarPersona").removeAttribute("disabled", "");
 
@@ -44,6 +45,9 @@ function traerPersona()
         }
         else
         {
+            document.getElementById("btnGetPersona").setAttribute("disabled", "");
+            document.getElementById("btnAltaPersona").setAttribute("disabled", "");
+            document.getElementById("btnEditarPersona").setAttribute("disabled", "");
             info.appendChild(spinner);
         }
     };
@@ -110,11 +114,14 @@ function crearDetalle(tabla, personas)
         radio = document.createElement("input");
         radio.setAttribute("type", "radio");
         radio.setAttribute("name", "selector");
+        radio.setAttribute("id", "radio" + i);
         radio.addEventListener("change", pintarFila, false);
         columna.appendChild(radio);
+
         for(atributo in personas[i])
         {
             columna = document.createElement("td");
+            columna.setAttribute("id", atributo + i);
             filaCabecera.appendChild(columna);
             texto = document.createTextNode(personas[i][atributo]);
             columna.appendChild(texto);
@@ -124,20 +131,20 @@ function crearDetalle(tabla, personas)
 
 function pintarFila()
 {
-    var seleccionado = document.getElementsByTagName("input");
+    var filaPintada = document.getElementsByClassName("filaSeleccionada");
+    var atributoId;
 
-    for (var i = 0; i < seleccionado.length; i++)
+    for(var i = 0; i < filaPintada.length; i++)
     {
-        if(seleccionado[i].checked)
-        {
-            seleccionado[i].parentElement.parentElement.setAttribute("class", "filaSeleccionada");
-        }
-        else
-        {
-            if(seleccionado[i].parentElement.parentElement.className === "filaSeleccionada")
-            {
-                seleccionado[i].parentElement.parentElement.removeAttribute("class");
-            }
-        }
+        filaPintada[i].removeAttribute("class");
     }
+
+    this.parentElement.parentElement.setAttribute("class", "filaSeleccionada");
+
+    do
+    {
+        atributoId = this.parentElement.nextElementSibling;
+    } while(atributoId.getAttribute("id").substr(1,2) === "id");
+
+    idSeleccionado = atributoId.childNodes[0];
 }
