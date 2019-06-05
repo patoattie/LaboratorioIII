@@ -130,13 +130,13 @@ function pintarFila()
     {
         if(seleccionado[i].checked)
         {
-            seleccionado[i].parentElement.parentElement.className = "filaSeleccionada";
+            seleccionado[i].parentElement.parentElement.setAttribute("class", "filaSeleccionada");
         }
         else
         {
             if(seleccionado[i].parentElement.parentElement.className === "filaSeleccionada")
             {
-                seleccionado[i].parentElement.parentElement.className = "";
+                seleccionado[i].parentElement.parentElement.removeAttribute("class");
             }
         }
     }
