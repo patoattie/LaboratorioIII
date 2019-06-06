@@ -1,5 +1,6 @@
 addEventListener("load", asignarManejadores, false);
 var idSeleccionado;
+var objetoSeleccionado = [];
 
 function asignarManejadores()
 {
@@ -75,7 +76,6 @@ function crearTabla(personas)
     var div = document.getElementById("info");
     var tabla = document.createElement("table");
     tabla.setAttribute("border", "1px");
-    //tabla.setAttribute("border-collapse", "collapse");
     div.appendChild(tabla);
     crearCabecera(tabla, personas);
     crearDetalle(tabla, personas);
@@ -88,8 +88,6 @@ function crearCabecera(tabla, personas)
     var columna;
     var texto;
     tabla.appendChild(filaCabecera);
-    columna = document.createElement("th");
-    filaCabecera.appendChild(columna);
     for(atributo in personas[0])
     {
         columna = document.createElement("th");
@@ -108,20 +106,14 @@ function crearDetalle(tabla, personas)
         var columna;
         var radio;
         var texto;
+        //filaCabecera.setAttribute("id", "fila" + i);
+        filaCabecera.addEventListener("click", pintarFila, false);
         tabla.appendChild(filaCabecera);
-        columna = document.createElement("td");
-        filaCabecera.appendChild(columna);
-        radio = document.createElement("input");
-        radio.setAttribute("type", "radio");
-        radio.setAttribute("name", "selector");
-        radio.setAttribute("id", "radio" + i);
-        radio.addEventListener("change", pintarFila, false);
-        columna.appendChild(radio);
 
         for(atributo in personas[i])
         {
             columna = document.createElement("td");
-            columna.setAttribute("id", atributo + i);
+            columna.setAttribute("class", atributo);
             filaCabecera.appendChild(columna);
             texto = document.createTextNode(personas[i][atributo]);
             columna.appendChild(texto);
@@ -132,19 +124,24 @@ function crearDetalle(tabla, personas)
 function pintarFila()
 {
     var filaPintada = document.getElementsByClassName("filaSeleccionada");
-    var atributoId;
+    var atributo;
 
     for(var i = 0; i < filaPintada.length; i++)
     {
         filaPintada[i].removeAttribute("class");
     }
 
-    this.parentElement.parentElement.setAttribute("class", "filaSeleccionada");
+    this.setAttribute("class", "filaSeleccionada");
+    atributo = this.firstElementChild;
+
+    /*while(atributoId.getAttribute("id").substr(0,2) !== "id")
+    {
+        atributoId = this.nextElementSibling;
+    }*/
 
     do
     {
-        atributoId = this.parentElement.nextElementSibling;
-    } while(atributoId.getAttribute("id").substr(1,2) === "id");
-
-    idSeleccionado = atributoId.childNodes[0];
+        objetoSeleccionado[atributo.getAttribute("class")] = atributo.childNodes[0];
+        atributo = atributo.nextElementSibling;
+    } while(atributo != null);
 }
