@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/script.js"></script>
+    <title>Document</title>
+</head>
+<body>
+
+    <form action="#">
+        <fieldset>
+            <legend>Alta Persona</legend>
+            <table>
+                <tr>
+                    <td><label for="txtApellido">Apellido: </label></td> 
+                    <td><input type="text" id="txtApellido"></td>
+                </tr>
+                <tr>
+                    <td><label for="txtNombre">Nombre: </label></td> 
+                    <td><input type="text" id="txtNombre"></td>
+                </tr>
+                <tr>
+                    <td><label for="txtEdad">Edad: </label></td> 
+                    <td><input type="text" id="txtEdad"></td>
+                </tr>
+            </table>
+            <p>
+                <input type="submit" value="Alta Persona">
+            </p>
+        </fieldset>
+    </form>
+
+    <hr id="sep">
+
+    <form action="#">
+        <fieldset>
+            <legend>Modificar Persona</legend>
+            <table>
+                <tr>
+                    <td><label for="txtIdm">Id: </label></td> 
+                    <td><input type="text" id="txtIdm"></td>
+                </tr>
+                <tr>
+                    <td><label for="txtApellidom">Apellido: </label></td> 
+                    <td><input type="text" id="txtApellidom"></td>
+                </tr>
+                <tr>
+                    <td><label for="txtNombrem">Nombre: </label></td> 
+                    <td><input type="text" id="txtNombrem"></td>
+                </tr>
+                <tr>
+                    <td><label for="txtEdadm">Edad: </label></td> 
+                    <td><input type="text" id="txtEdadm"></td>
+                </tr>
+            </table>
+            <p>
+                <input type="submit" value="Modificar Persona">
+            </p>
+        </fieldset>
+    </form>
+
+    <hr id="sepm">
+
+    <fieldset>
+        <legend>Persona Agregada</legend>
+        <table>
+            <tr>
+                <td>
+                    <label for="id">Id: </label>
+                </td>
+                <td>
+                    <input type="text" id="id">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="apellido">Apellido: </label>
+                </td>
+                <td>
+                    <input type="text" id="apellido">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="nombre">Nombre: </label>
+                </td>
+                <td>
+                    <input type="text" id="nombre">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="edad">Edad: </label>
+                </td>
+                <td>
+                    <input type="text" id="edad">
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+
+    <hr>
+
+    <button id="getPersonas">Traer Personas</button>
+
+    <div id="info"></div>
+
+</body>
+</html>

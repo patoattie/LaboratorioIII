@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const parser = require('body-parser');
-var personas = require('./personas.json');
+//var personas = require('./personas.json');
 var arrayPersonas = [];
 var id = 20000;
 var puerto = 3000;
@@ -94,8 +94,9 @@ app.post('/modificarPersona', (request, response) => {
     });
 
     if (index != -1) {
-      arrayPersonas.splice(index, 1);
-      arrayPersonas.push(persona);
+      //arrayPersonas.splice(index, 1);
+      //arrayPersonas.push(persona);
+      arrayPersonas[index] = persona;
       console.log("Modificado");
       respuesta.todoOk = 1;
     }
