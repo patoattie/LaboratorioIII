@@ -81,7 +81,7 @@ function crearFormulario()
     div.appendChild(formulario);
     formulario.appendChild(grupo);
     grupo.appendChild(leyenda);
-    leyenda.appendChild(document.createTextNode("Persona"));
+    leyenda.textContent = "Persona";
 
     for(var atributo in personas[0])
     {
@@ -92,7 +92,7 @@ function crearFormulario()
         var cuadroTexto = document.createElement("input");
 
         etiqueta.setAttribute("for", "txt" + atributoCapitalizado);
-        etiqueta.appendChild(document.createTextNode(atributoCapitalizado + ": "));
+        etiqueta.textContent = atributoCapitalizado + ": ";
         cuadroTexto.setAttribute("type", "text");
         cuadroTexto.setAttribute("id", "txt" + atributoCapitalizado);
         grupo.appendChild(parrafoEtiqueta);
@@ -111,9 +111,10 @@ function crearCabecera(tabla)
     for(var atributo in personas[0])
     {
         columna = document.createElement("th");
+        columna.textContent = atributo;
         filaCabecera.appendChild(columna);
-        texto = document.createTextNode(atributo);
-        columna.appendChild(texto);
+        /*texto = document.createTextNode(atributo);
+        columna.appendChild(texto);*/
     }
 }
 
@@ -134,9 +135,10 @@ function crearDetalle(tabla)
         {
             columna = document.createElement("td");
             columna.setAttribute("class", atributo);
+            columna.textContent = personas[i][atributo];
             filaDetalle.appendChild(columna);
-            texto = document.createTextNode(personas[i][atributo]);
-            columna.appendChild(texto);
+            /*texto = document.createTextNode(personas[i][atributo]);
+            columna.appendChild(texto);*/
         }
     }
 }

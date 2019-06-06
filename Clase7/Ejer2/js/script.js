@@ -14,7 +14,10 @@ function asignarManejadores() {
         modificarPersona(newPersona());
     }, false);
 
-
+    document.forms[2].addEventListener('submit', e => {
+        e.preventDefault();
+        eliminarPersona(newPersona());
+    }, false);
 
 }
 
