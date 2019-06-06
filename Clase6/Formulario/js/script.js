@@ -1,10 +1,12 @@
 addEventListener("load", asignarManejadores, false);
-var objetoSeleccionado = [];
+var personas = [];
+var personaSeleccionada = [];
 
 function asignarManejadores()
 {
     document.getElementById("btnGetPersona").addEventListener("click", traerPersona, false);
     document.getElementById("btnAltaPersona").addEventListener("click", altaPersona, false);
+    document.getElementById("btnEditarPersona").addEventListener("click", editarPersona, false);
 }
 
 function traerPersona()
@@ -12,7 +14,6 @@ function traerPersona()
     var txtNombre = document.getElementById("txtNombre");
     var txtApellido = document.getElementById("txtApellido");
     var txtEdad = document.getElementById("txtEdad");
-    var personas = [];
     var lista = "";
 
     var xhr = new XMLHttpRequest();
@@ -32,7 +33,8 @@ function traerPersona()
             if(this.status == 200) // Estado OK
             {
                 personas = JSON.parse(this.responseText); //Respuesta de texto del servidor (JSON), lo convierto a objeto
-                crearTabla(personas);
+                crearTabla();
+                crearFormulario();
 
                 document.getElementById("btnGetPersona").removeAttribute("disabled", "");
                 document.getElementById("btnAltaPersona").removeAttribute("disabled", "");
@@ -51,10 +53,10 @@ function traerPersona()
     xhr.open("GET", "http://localhost:3000/traerPersonas", true); // true para que sea asincronico, debe ir el protocolo en forma explicita
     xhr.send(); //se envia la peticion al servidor
 
-    return personas;
+    //return personas;
 }
 
-function crearTabla(personas)
+function crearTabla()
 {
     var div = document.getElementById("info");
     var tabla = document.createElement("table");
@@ -62,18 +64,50 @@ function crearTabla(personas)
     tabla.style.borderCollapse = "collapse"
     tabla.setAttribute("id", "tablaPersonas");
     div.appendChild(tabla);
-    crearCabecera(tabla, personas);
-    crearDetalle(tabla, personas);
+    crearCabecera(tabla);
+    crearDetalle(tabla);
 }
 
-function crearCabecera(tabla, personas)
+function crearFormulario()
+{
+    var div = document.getElementById("info");
+    var formulario = document.createElement("form");
+    var grupo = document.createElement("fieldset");
+    var leyenda = document.createElement("legend");
+    formulario.setAttribute("action", "#");
+    formulario.setAttribute("id", "formularioPersonas");
+    formulario.style.display = "none";
+    div.appendChild(formulario);
+    formulario.appendChild(grupo);
+    grupo.appendChild(leyenda);
+    leyenda.appendChild(document.createTextNode("Persona"));
+
+    for(var atributo in personas[0])
+    {
+        var parrafoEtiqueta = document.createElement("p");
+        var parrafoTexto = document.createElement("p");
+        var etiqueta = document.createElement("label");
+        var atributoCapitalizado = atributo.charAt(0).toUpperCase() + atributo.slice(1).toLowerCase(); //Primer letra en mayuscula, resto minuscula
+        var cuadroTexto = document.createElement("input");
+
+        etiqueta.setAttribute("for", "txt" + atributoCapitalizado);
+        etiqueta.appendChild(document.createTextNode(atributoCapitalizado + ": "));
+        cuadroTexto.setAttribute("type", "text");
+        cuadroTexto.setAttribute("id", "txt" + atributoCapitalizado);
+        grupo.appendChild(parrafoEtiqueta);
+        grupo.appendChild(parrafoTexto);
+        parrafoEtiqueta.appendChild(etiqueta);
+        parrafoTexto.appendChild(cuadroTexto);
+    }
+}
+
+function crearCabecera(tabla)
 {
     var filaCabecera = document.createElement("tr");
-    var atributo;
     var columna;
     var texto;
     tabla.appendChild(filaCabecera);
-    for(atributo in personas[0])
+    for(var atributo in personas[0])
     {
         columna = document.createElement("th");
         filaCabecera.appendChild(columna);
@@ -82,24 +116,24 @@ function crearCabecera(tabla, personas)
     }
 }
 
-function crearDetalle(tabla, personas)
+function crearDetalle(tabla)
 {
     for(var i = 0; i < personas.length; i++)
     {
-        var filaCabecera = document.createElement("tr");
+        var filaDetalle = document.createElement("tr");
         var atributo;
         var columna;
         var radio;
         var texto;
-        //filaCabecera.setAttribute("id", "fila" + i);
-        filaCabecera.addEventListener("click", pintarFila, false);
-        tabla.appendChild(filaCabecera);
+        //filaDetalle.setAttribute("id", "fila" + i);
+        filaDetalle.addEventListener("click", pintarFila, false);
+        tabla.appendChild(filaDetalle);
 
         for(atributo in personas[i])
         {
             columna = document.createElement("td");
             columna.setAttribute("class", atributo);
-            filaCabecera.appendChild(columna);
+            filaDetalle.appendChild(columna);
             texto = document.createTextNode(personas[i][atributo]);
             columna.appendChild(texto);
         }
@@ -123,7 +157,7 @@ function pintarFila()
 
     do
     {
-        objetoSeleccionado[atributo.getAttribute("class")] = atributo.childNodes[0];
+        personaSeleccionada[atributo.getAttribute("class")] = atributo.childNodes[0];
         atributo = atributo.nextElementSibling;
     } while(atributo != null);
 }
@@ -131,4 +165,11 @@ function pintarFila()
 function altaPersona()
 {
     document.getElementById("tablaPersonas").style.display = "none";
+    document.getElementById("formularioPersonas").style.display = "initial";
+}
+
+function editarPersona()
+{
+    document.getElementById("tablaPersonas").style.display = "table";
+    document.getElementById("formularioPersonas").style.display = "none";
 }
