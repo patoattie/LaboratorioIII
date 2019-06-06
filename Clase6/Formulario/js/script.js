@@ -1,10 +1,10 @@
 addEventListener("load", asignarManejadores, false);
-var idSeleccionado;
 var objetoSeleccionado = [];
 
 function asignarManejadores()
 {
     document.getElementById("btnGetPersona").addEventListener("click", traerPersona, false);
+    document.getElementById("btnAltaPersona").addEventListener("click", altaPersona, false);
 }
 
 function traerPersona()
@@ -36,12 +36,7 @@ function traerPersona()
 
                 document.getElementById("btnGetPersona").removeAttribute("disabled", "");
                 document.getElementById("btnAltaPersona").removeAttribute("disabled", "");
-                document.getElementById("btnEditarPersona").removeAttribute("disabled", "");
-
-                /*for(var i in personas)
-                {
-                    info.innerHTML += "<p>" + personaToString(personas[i]) + "</p>";
-                }*/
+                //document.getElementById("btnEditarPersona").removeAttribute("disabled", "");
             }
         }
         else
@@ -59,23 +54,13 @@ function traerPersona()
     return personas;
 }
 
-/*function personaToString(persona)
-{
-    var cadena = "";
-
-    for(var prop in persona)
-    {
-        cadena += "<b>" + prop + ":</b> " + persona[prop] + " ";
-    }
-
-    return cadena;
-}*/
-
 function crearTabla(personas)
 {
     var div = document.getElementById("info");
     var tabla = document.createElement("table");
     tabla.setAttribute("border", "1px");
+    tabla.style.borderCollapse = "collapse"
+    tabla.setAttribute("id", "tablaPersonas");
     div.appendChild(tabla);
     crearCabecera(tabla, personas);
     crearDetalle(tabla, personas);
@@ -126,6 +111,8 @@ function pintarFila()
     var filaPintada = document.getElementsByClassName("filaSeleccionada");
     var atributo;
 
+    document.getElementById("btnEditarPersona").removeAttribute("disabled", "");
+    
     for(var i = 0; i < filaPintada.length; i++)
     {
         filaPintada[i].removeAttribute("class");
@@ -134,14 +121,14 @@ function pintarFila()
     this.setAttribute("class", "filaSeleccionada");
     atributo = this.firstElementChild;
 
-    /*while(atributoId.getAttribute("id").substr(0,2) !== "id")
-    {
-        atributoId = this.nextElementSibling;
-    }*/
-
     do
     {
         objetoSeleccionado[atributo.getAttribute("class")] = atributo.childNodes[0];
         atributo = atributo.nextElementSibling;
     } while(atributo != null);
+}
+
+function altaPersona()
+{
+    document.getElementById("tablaPersonas").style.display = "none";
 }
