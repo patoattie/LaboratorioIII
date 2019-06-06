@@ -165,6 +165,7 @@ function pintarFila()
 
 function altaPersona()
 {
+    document.getElementById("btnAltaPersona").setAttribute("disabled", "");
     document.getElementById("btnEditarPersona").setAttribute("disabled", "");
 
     document.getElementById("tablaPersonas").style.display = "none";
@@ -176,6 +177,7 @@ function altaPersona()
 function editarPersona()
 {
     document.getElementById("btnAltaPersona").setAttribute("disabled", "");
+    document.getElementById("btnEditarPersona").setAttribute("disabled", "");
 
     document.getElementById("tablaPersonas").style.display = "none";
     document.getElementById("formularioPersonas").style.display = "initial";
