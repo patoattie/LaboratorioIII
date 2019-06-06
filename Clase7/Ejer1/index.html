@@ -9,9 +9,67 @@
 </head>
 <body>
 
+    <form action="#">
+        <fieldset>
+            <legend>Alta Persona</legend>
+            <table>
+                <tr>
+                    <td>
+                        <label for="txtApellido">Apellido: </label>
+                    </td> 
+                    <td>
+                        <input type="text" id="txtApellido">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="txtNombre">Nombre: </label>
+                    </td> 
+                    <td>
+                        <input type="text" id="txtNombre">
+                    </td>
+                </tr>
+            </table>
+            <p><input type="submit" value="Alta Persona"></p>
+        </fieldset>
+    </form>
 
-    <input type="button" value="Traer Personas" id="btnGetPersona">
-    
+    <hr id="sep">
+
+    <fieldset>
+        <legend>Persona Agregada</legend>
+        <table>
+            <tr>
+                <td>
+                    <label for="id">Id: </label>
+                </td>
+                <td>
+                    <input type="text" id="id">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="apellido">Apellido: </label>
+                </td>
+                <td>
+                    <input type="text" id="apellido">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="nombre">Nombre: </label>
+                </td>
+                <td>
+                    <input type="text" id="nombre">
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+
+    <hr>
+
+    <button id="getPersonas">Traer Personas</button>
+
     <div id="info"></div>
 
 </body>

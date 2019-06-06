@@ -1,60 +1,129 @@
-addEventListener("load", asignarManejadores, false);
+window.addEventListener('load', asignarManejadores, false);
 
-function asignarManejadores()
-{
-    document.getElementById("btnGetPersona").addEventListener("click", traerPersona, false);
+function asignarManejadores() {
+
+    document.getElementById('getPersonas').addEventListener('click', traerPersonas, false);
+
+    document.forms[0].addEventListener('submit', e => {
+        e.preventDefault();
+        agregarPersona(newPersona());
+    }, false);
+
+
+
 }
 
-function traerPersona()
-{
-    var txtNombre = document.getElementById("txtNombre");
-    var txtApellido = document.getElementById("txtApellido");
-    var txtEdad = document.getElementById("txtEdad");
-    var personas = [];
-    var lista = "";
+function agregarPersona(persona) {
+    var info = document.getElementById('sep');
+
+    var personaRta;
 
     var xhr = new XMLHttpRequest();
-    var info = document.getElementById("info");
-    info.innerHTML = "";
-    var spinner = document.createElement("img");
-    spinner.setAttribute("src", "image/preloader.gif");
-    spinner.setAttribute("alt", "Espere mientras se procesa la petición...");
-    spinner.setAttribute("height", "48px");
-    spinner.setAttribute("width", "48px");
 
-    xhr.onreadystatechange = function() //0 al 4 son los estados, 4 es el estado DONE
-    {
-        if(this.readyState == XMLHttpRequest.DONE) //XMLHttpRequest.DONE = 4
-        {
-            info.innerHTML = "";
-            if(this.status == 200) // Estado OK
-            {
-                personas = JSON.parse(this.responseText); //Respuesta de texto del servidor (JSON), lo convierto a objeto
+    xhr.onreadystatechange = function() {
 
-                for(var i in personas)
-                {
-                    info.innerHTML += "<p>" + personaToString(personas[i]) + "</p>";
-                }
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (this.status == 200) {
+                personaRta = JSON.parse(xhr.responseText);
+
+                console.log(personaRta);
+
+                document.getElementById('id').value = personaRta.id;
+                document.getElementById('nombre').value = personaRta.nombre;
+                document.getElementById('apellido').value = personaRta.apellido;
+
+                info.innerHTML = "";
+
+                //traerPersonas();
+
+            } else {
+                console.log("error: " + xhr.status);
             }
-        }
-        else
-        {
-            info.appendChild(spinner);
-        }
-};
 
-    xhr.open("GET", "http://localhost:3000/traerPersonas", true); // true para que sea asincronico, debe ir el protocolo en forma explicita
-    xhr.send(); //se envia la peticion al servidor
+        } else {
+
+            info.appendChild(ponerSpinner()); //mientras no responde positivo muestra manejador
+        }
+
+    };
+
+    xhr.open('POST', 'http://localhost:3000/altaPersona', true); //abre la conexion( metodo , URL, que sea asincronico y no se quede esperando el retorno)
+
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.send(JSON.stringify(persona));
+
+    // con POST LOS DATOS PASAR POR SEND
 }
 
-function personaToString(persona)
-{
-    var cadena = "";
 
-    for(var prop in persona)
-    {
-        cadena += "<b>" + prop + ":</b> " + persona[prop] + " ";
+function newPersona(formulario) {
+    console.log(formulario);
+    var persona = {};
+    persona.nombre = document.getElementById('txtNombre').value;
+    persona.apellido = document.getElementById('txtApellido').value;
+    return persona;
+}
+
+function traerPersonas() {
+
+    var personas = [];
+
+    var info = document.getElementById('info');
+    var xhr = new XMLHttpRequest();
+    info.innerHTML = "";
+
+    xhr.onreadystatechange = function() {
+
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (this.status == 200) {
+                personas = JSON.parse(xhr.responseText);
+
+                info.innerHTML = "";
+                for (var i in personas) {
+                    info.innerHTML += "<p>" + personaToString(personas[i]) + "</p>";
+                }
+
+            } else {
+                console.log("error: " + xhr.status);
+            }
+
+        } else {
+            info.appendChild(ponerSpinner()); //mientras no responde positivo muestra manejador
+        }
+
+    };
+
+    xhr.open('GET', 'http://localhost:3000/traerPersonasArray', true); //abre la conexion( metodo , URL, que sea asincronico y no se quede esperando el retorno)
+    xhr.send(); // con POST LOS DATOS PASAR POR SEND
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function personaToString(persona) {
+    var cadena = '';
+    for (var prop in persona) {
+        cadena += "<b>" + prop + "</b> : " + persona[prop] + " ";
     }
-
     return cadena;
+}
+
+
+
+function ponerSpinner() {
+    var spinner = document.createElement('img');
+    spinner.setAttribute('src', 'image/preloader.gif');
+    spinner.setAttribute('alt', 'spinner');
+
+    return spinner;
 }
