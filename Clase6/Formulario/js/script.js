@@ -74,6 +74,7 @@ function crearFormulario()
     var formulario = document.createElement("form");
     var grupo = document.createElement("fieldset");
     var leyenda = document.createElement("legend");
+
     formulario.setAttribute("action", "#");
     formulario.setAttribute("id", "formularioPersonas");
     formulario.style.display = "none";
@@ -164,12 +165,45 @@ function pintarFila()
 
 function altaPersona()
 {
+    document.getElementById("btnEditarPersona").setAttribute("disabled", "");
+
     document.getElementById("tablaPersonas").style.display = "none";
     document.getElementById("formularioPersonas").style.display = "initial";
+
+    mostrarFormulario();
 }
 
 function editarPersona()
 {
-    document.getElementById("tablaPersonas").style.display = "table";
-    document.getElementById("formularioPersonas").style.display = "none";
+    document.getElementById("btnAltaPersona").setAttribute("disabled", "");
+
+    document.getElementById("tablaPersonas").style.display = "none";
+    document.getElementById("formularioPersonas").style.display = "initial";
+
+    mostrarFormulario(personaSeleccionada);
+}
+
+function mostrarFormulario()
+{
+    var datos;
+
+    if(typeof arguments[0] == "object")
+    {
+        datos = arguments[0];
+    }
+
+    for(var atributo in personas[0])
+    {
+        var atributoCapitalizado = atributo.charAt(0).toUpperCase() + atributo.slice(1).toLowerCase(); //Primer letra en mayuscula, resto minuscula
+
+        if(typeof datos == "object")
+        {
+            document.getElementById("txt" + atributoCapitalizado).value = datos[atributo].nodeValue;
+        }
+        else
+        {
+            document.getElementById("txt" + atributoCapitalizado).value = "";
+        }
+    }
+   
 }
