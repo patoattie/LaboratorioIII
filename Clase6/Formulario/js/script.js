@@ -1,6 +1,7 @@
 addEventListener("load", asignarManejadores, false);
 var personas = [];
 var personaSeleccionada = [];
+var spinner = document.createElement("img");
 
 function asignarManejadores()
 {
@@ -13,8 +14,6 @@ function asignarManejadores()
 
 function crearSpinner()
 {
-    var spinner = document.createElement("img");
-
     spinner.setAttribute("src", "image/preloader.gif");
     spinner.setAttribute("alt", "Espere mientras se procesa la petición...");
     spinner.setAttribute("height", "48px");
@@ -49,7 +48,7 @@ function traerPersona()
             document.getElementById("btnGetPersona").setAttribute("disabled", "");
             document.getElementById("btnAltaPersona").setAttribute("disabled", "");
             document.getElementById("btnEditarPersona").setAttribute("disabled", "");
-            info.appendChild(document.getElementById("spinner"));
+            info.appendChild(spinner);
         }
     };
 
@@ -68,13 +67,15 @@ function construirPersona()
 
     for(var atributo in personas)
     {
-        persona[atributo] = document.getElementById("fila" + atributo).value;
+        var atributoCapitalizado = atributo.charAt(0).toUpperCase() + atributo.slice(1).toLowerCase(); //Primer letra en mayuscula, resto minuscula
+        persona[atributo] = document.getElementById("txt" + atributoCapitalizado).nodeValue;
     }
 
     return persona;
 }
 
-function agregarPersona(persona) {
+function agregarPersona(persona)
+{
     var xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function()
@@ -158,7 +159,6 @@ function crearFormulario()
 
         fila.appendChild(columnaEtiqueta);
         fila.appendChild(columnaTexto);
-        fila.setAttribute("id", "fila" + atributo);
 
         etiqueta.setAttribute("for", "txt" + atributoCapitalizado);
         etiqueta.textContent = atributoCapitalizado + ": ";
