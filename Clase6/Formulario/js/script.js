@@ -65,10 +65,10 @@ function construirPersona()
 {
     var persona = [];
 
-    for(var atributo in personas)
+    for(var atributo in personas[0])
     {
         var atributoCapitalizado = atributo.charAt(0).toUpperCase() + atributo.slice(1).toLowerCase(); //Primer letra en mayuscula, resto minuscula
-        persona[atributo] = document.getElementById("txt" + atributoCapitalizado).nodeValue;
+        persona[atributo] = document.getElementById("txt" + atributoCapitalizado).value;
     }
 
     return persona;
@@ -85,7 +85,8 @@ function agregarPersona(persona)
             info.innerHTML = "";
             if (this.status == 200)
             {
-                crearDetalle(tabla, JSON.parse(xhr.responseText));
+                crearDetalle(document.getElementById("tablaPersonas"), JSON.parse(xhr.responseText));
+//console.log(JSON.parse(xhr.responseText));
             }
             else
             {
@@ -95,7 +96,7 @@ function agregarPersona(persona)
         }
         else
         {
-            info.appendChild(document.getElementById("spinner"));
+            info.appendChild(spinner);
         }
 
     };
@@ -103,7 +104,7 @@ function agregarPersona(persona)
     xhr.open('POST', 'http://localhost:3000/altaPersona', true); //abre la conexion( metodo , URL, que sea asincronico y no se quede esperando el retorno)
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.send(JSON.stringify(persona));
-
+console.log(JSON.stringify(persona));
     ocultarFormulario();
 
     // con POST LOS DATOS PASAR POR SEND
