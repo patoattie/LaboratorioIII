@@ -59,8 +59,19 @@ function traerPersona()
 
 function opcionAgregarPersona()
 {
-    var grupo = this.parentElement;
-    //Tengo que llegar a las filas, que tienen en la clase el nombre del atributo, para armar el objeto que le tengo que pasar a agregarPersona
+    agregarPersona(construirPersona());
+}
+
+function construirPersona()
+{
+    var persona = [];
+
+    for(var atributo in personas)
+    {
+        persona[atributo] = document.getElementById("fila" + atributo).value;
+    }
+
+    return persona;
 }
 
 function agregarPersona(persona) {
@@ -91,6 +102,8 @@ function agregarPersona(persona) {
     xhr.open('POST', 'http://localhost:3000/altaPersona', true); //abre la conexion( metodo , URL, que sea asincronico y no se quede esperando el retorno)
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.send(JSON.stringify(persona));
+
+    ocultarFormulario();
 
     // con POST LOS DATOS PASAR POR SEND
 }
@@ -145,7 +158,7 @@ function crearFormulario()
 
         fila.appendChild(columnaEtiqueta);
         fila.appendChild(columnaTexto);
-        fila.setAttribute("class", atributo);
+        fila.setAttribute("id", "fila" + atributo);
 
         etiqueta.setAttribute("for", "txt" + atributoCapitalizado);
         etiqueta.textContent = atributoCapitalizado + ": ";
