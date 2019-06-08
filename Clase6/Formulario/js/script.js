@@ -1,13 +1,18 @@
 addEventListener("load", asignarManejadores, false);
+
 var personas = [];
 var personaSeleccionada = [];
 var spinner = document.createElement("img");
+var div;
+var tabla;
 
 function asignarManejadores()
 {
     document.getElementById("btnGetPersona").addEventListener("click", traerPersona, false);
     document.getElementById("btnAltaPersona").addEventListener("click", altaPersona, false);
     document.getElementById("btnEditarPersona").addEventListener("click", editarPersona, false);
+
+    div = document.getElementById("info");
 
     crearSpinner();
 }
@@ -24,23 +29,19 @@ function crearSpinner()
 function traerPersona()
 {
     var xhr = new XMLHttpRequest();
-    var info = document.getElementById("info");
+    //var info = document.getElementById("info");
 
-    info.innerHTML = "";
+    div.innerHTML = "";
 
     xhr.onreadystatechange = function() //0 al 4 son los estados, 4 es el estado DONE
     {
         if(this.readyState == XMLHttpRequest.DONE) //XMLHttpRequest.DONE = 4
         {
-            info.innerHTML = "";
+            div.innerHTML = "";
             if(this.status == 200) // Estado OK
             {
                 personas = JSON.parse(this.responseText); //Respuesta de texto del servidor (JSON), lo convierto a objeto
 
-                if(typeof personas[0] != "object")
-                {
-                    personas[0] = {"id":null,"first_name":null,"last_name":null,"email":null,"gender":null};
-                }
                 crearTabla();
                 crearFormulario();
 
@@ -53,7 +54,7 @@ function traerPersona()
             document.getElementById("btnGetPersona").setAttribute("disabled", "");
             document.getElementById("btnAltaPersona").setAttribute("disabled", "");
             document.getElementById("btnEditarPersona").setAttribute("disabled", "");
-            info.appendChild(spinner);
+            div.appendChild(spinner);
         }
     };
 
@@ -63,12 +64,12 @@ function traerPersona()
 
 function opcionAgregarPersona()
 {
-    agregarPersona(construirPersona());
+    agregarPersona(construirPersonaJSON());
 }
 
-function construirPersona()
+function construirPersonaJSON()
 {
-    var persona = [];
+    var persona = {};
 
     for(var atributo in personas[0])
     {
@@ -82,15 +83,19 @@ function construirPersona()
 function agregarPersona(persona)
 {
     var xhr = new XMLHttpRequest();
+    var nuevaPersona = [];
 
     xhr.onreadystatechange = function()
     {
         if (this.readyState == XMLHttpRequest.DONE)
         {
-            info.innerHTML = "";
+            //info.innerHTML = "";
             if (this.status == 200)
             {
-                crearDetalle(document.getElementById("tablaPersonas"), JSON.parse(xhr.responseText));
+                info.removeChild(spinner);
+                nuevaPersona.push(JSON.parse(xhr.responseText));
+                ocultarFormulario();
+                crearDetalle(tabla, nuevaPersona);
             }
             else
             {
@@ -108,27 +113,37 @@ function agregarPersona(persona)
     xhr.open('POST', 'http://localhost:3000/altaPersona', true); //abre la conexion( metodo , URL, que sea asincronico y no se quede esperando el retorno)
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.send(JSON.stringify(persona));
-//console.log(JSON.stringify(persona));
-    ocultarFormulario();
 
     // con POST LOS DATOS PASAR POR SEND
 }
 
 function crearTabla()
 {
-    var div = document.getElementById("info");
-    var tabla = document.createElement("table");
+    tabla = document.createElement("table");
+    var puedeCrearDetalle = true; //Si no tengo elementos desde el servidor cambia a false.
+
     tabla.setAttribute("border", "1px");
     tabla.style.borderCollapse = "collapse"
     tabla.setAttribute("id", "tablaPersonas");
     div.appendChild(tabla);
+
+    if(typeof personas[0] != "object") //Si el servidor no trae nada creo la estructura vacía.
+    {
+        personas[0] = {"id":null,"nombre":null,"apellido":null,"edad":null};
+        puedeCrearDetalle = false;
+    }
+
     crearCabecera(tabla);
-    crearDetalle(tabla, personas);
+
+    if(puedeCrearDetalle)
+    {
+        crearDetalle(tabla, personas);
+    }
 }
 
 function crearFormulario()
 {
-    var div = document.getElementById("info");
+    //var div = document.getElementById("info");
     var formulario = document.createElement("form");
     var grupo = document.createElement("fieldset");
     var leyenda = document.createElement("legend");
@@ -170,6 +185,10 @@ function crearFormulario()
 
         cuadroTexto.setAttribute("type", "text");
         cuadroTexto.setAttribute("id", "txt" + atributoCapitalizado);
+        if(atributo === "id")
+        {
+            cuadroTexto.setAttribute("readonly", "");
+        }
 
         columnaEtiqueta.appendChild(etiqueta);
 
@@ -308,20 +327,10 @@ function mostrarFormulario()
         if(typeof datos == "object")
         {
             document.getElementById("txt" + atributoCapitalizado).value = datos[atributo].nodeValue;
-
-            if(atributo === "id")
-            {
-                document.getElementById("txt" + atributoCapitalizado).setAttribute("readonly", "");
-            }
         }
         else
         {
             document.getElementById("txt" + atributoCapitalizado).value = "";
-
-            if(atributo === "id")
-            {
-                document.getElementById("txt" + atributoCapitalizado).removeAttribute("readonly");
-            }
         }
     }
 }
