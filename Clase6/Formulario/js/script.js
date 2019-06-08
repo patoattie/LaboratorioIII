@@ -36,6 +36,12 @@ function traerPersona()
             if(this.status == 200) // Estado OK
             {
                 personas = JSON.parse(this.responseText); //Respuesta de texto del servidor (JSON), lo convierto a objeto
+
+                if(typeof personas[0] != "object")
+                {
+                    personas[0] = {"id":null,"first_name":null,"last_name":null,"email":null,"gender":null};
+                    console.log(personas[0]);
+                }
                 crearTabla();
                 crearFormulario();
 
@@ -86,7 +92,6 @@ function agregarPersona(persona)
             if (this.status == 200)
             {
                 crearDetalle(document.getElementById("tablaPersonas"), JSON.parse(xhr.responseText));
-//console.log(JSON.parse(xhr.responseText));
             }
             else
             {
@@ -104,7 +109,7 @@ function agregarPersona(persona)
     xhr.open('POST', 'http://localhost:3000/altaPersona', true); //abre la conexion( metodo , URL, que sea asincronico y no se quede esperando el retorno)
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.send(JSON.stringify(persona));
-console.log(JSON.stringify(persona));
+//console.log(JSON.stringify(persona));
     ocultarFormulario();
 
     // con POST LOS DATOS PASAR POR SEND
