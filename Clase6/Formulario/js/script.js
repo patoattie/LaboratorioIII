@@ -40,7 +40,6 @@ function traerPersona()
                 if(typeof personas[0] != "object")
                 {
                     personas[0] = {"id":null,"first_name":null,"last_name":null,"email":null,"gender":null};
-                    console.log(personas[0]);
                 }
                 crearTabla();
                 crearFormulario();
