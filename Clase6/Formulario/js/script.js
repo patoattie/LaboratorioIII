@@ -2,44 +2,52 @@ addEventListener("load", asignarManejadores, false);
 
 var personas = [];
 var personaSeleccionada = [];
-var spinner = document.createElement("img");
-var div;
-var tabla;
 
+//Al dispararse el evento load cuando se termina de cargar la página web, 
+//se instancian los manejadores del evento click de los tres botones del menú.
 function asignarManejadores()
 {
-    document.getElementById("btnGetPersona").addEventListener("click", traerPersona, false);
+    document.getElementById("btnGetPersona").addEventListener("click", traerPersonas, false);
     document.getElementById("btnAltaPersona").addEventListener("click", altaPersona, false);
     document.getElementById("btnEditarPersona").addEventListener("click", editarPersona, false);
-
-    div = document.getElementById("info");
-
-    crearSpinner();
 }
 
+//Crea en el DOM el spinner que se utiliza para la espera de la respuesta del servidor.
+//Si el mismo ya está creado, entonces solamente lo instancia.
 function crearSpinner()
 {
-    spinner.setAttribute("src", "image/preloader.gif");
-    spinner.setAttribute("alt", "Espere mientras se procesa la petición...");
-    spinner.setAttribute("height", "48px");
-    spinner.setAttribute("width", "48px");
-    spinner.setAttribute("id", "spinner");
+    var spinner = document.getElementById("spinner");
+    
+    if(!spinner) //Si el spinner no está creado en el DOM
+    {
+        spinner = document.createElement("img");
+        spinner.setAttribute("src", "image/preloader.gif");
+        spinner.setAttribute("alt", "Espere mientras se procesa la petición...");
+        spinner.setAttribute("height", "48px");
+        spinner.setAttribute("width", "48px");
+        spinner.setAttribute("id", "spinner");
+    }
+
+    return spinner;
 }
 
-function traerPersona()
+//Llama a la función traerPersonas del servidor, luego con los datos devueltos se crean en el DOM la tabla y el formulario de edición.
+function traerPersonas()
 {
     var xhr = new XMLHttpRequest();
-    //var info = document.getElementById("info");
+    var info = document.getElementById("info");
+    var spinner = crearSpinner();
 
-    div.innerHTML = "";
+    info.innerHTML = "";
 
     xhr.onreadystatechange = function() //0 al 4 son los estados, 4 es el estado DONE
     {
         if(this.readyState == XMLHttpRequest.DONE) //XMLHttpRequest.DONE = 4
         {
-            div.innerHTML = "";
             if(this.status == 200) // Estado OK
             {
+                info.innerHTML = "";
+
                 personas = JSON.parse(this.responseText); //Respuesta de texto del servidor (JSON), lo convierto a objeto
 
                 crearTabla();
@@ -54,7 +62,8 @@ function traerPersona()
             document.getElementById("btnGetPersona").setAttribute("disabled", "");
             document.getElementById("btnAltaPersona").setAttribute("disabled", "");
             document.getElementById("btnEditarPersona").setAttribute("disabled", "");
-            div.appendChild(spinner);
+    
+            info.appendChild(spinner);
         }
     };
 
@@ -62,11 +71,13 @@ function traerPersona()
     xhr.send(); //se envia la peticion al servidor
 }
 
+//Llamador usado por el evento del botón de Agregar del formulario
 function opcionAgregarPersona()
 {
     agregarPersona(construirPersonaJSON());
 }
 
+//Crea un objeto JSON a partir de los datos del formulario
 function construirPersonaJSON()
 {
     var persona = {};
@@ -80,22 +91,23 @@ function construirPersonaJSON()
     return persona;
 }
 
+//Llama a la función altaPersona del servidor, pasándole el objeto que se quiere agregar por parámetro.
 function agregarPersona(persona)
 {
     var xhr = new XMLHttpRequest();
     var nuevaPersona = [];
+    var spinner = crearSpinner();
 
     xhr.onreadystatechange = function()
     {
         if (this.readyState == XMLHttpRequest.DONE)
         {
-            //info.innerHTML = "";
             if (this.status == 200)
             {
                 info.removeChild(spinner);
                 nuevaPersona.push(JSON.parse(xhr.responseText));
                 ocultarFormulario();
-                crearDetalle(tabla, nuevaPersona);
+                crearDetalle(document.getElementById("tablaPersonas"), nuevaPersona);
             }
             else
             {
@@ -117,15 +129,93 @@ function agregarPersona(persona)
     // con POST LOS DATOS PASAR POR SEND
 }
 
+//Llamador usado por el evento del botón de Borrar del formulario
+function opcionBorrarPersona()
+{
+    borrarPersona(construirPersonaJSON());
+}
+
+//Llama a la función bajaPersona del servidor, pasándole el objeto que se quiere eliminar por parámetro.
+function borrarPersona(persona)
+{
+    var xhr = new XMLHttpRequest();
+    var spinner = crearSpinner();
+
+    xhr.onreadystatechange = function()
+    {
+        if (this.readyState == XMLHttpRequest.DONE)
+        {
+            if (this.status == 200)
+            {
+                var respuesta = JSON.parse(xhr.responseText);
+                info.removeChild(spinner);
+
+                if(respuesta.todoOk === 1)
+                {
+                    alert("Persona:\n\n" + personaToString(persona) + "\n\nfue borrada de la tabla");
+                    borrarFila(document.getElementById("tablaPersonas"));
+                }
+                else
+                {
+                    alert("Error al borrar persona. No se hicieron cambios");
+                }
+
+                ocultarFormulario();
+            }
+            else
+            {
+                console.log("error: " + xhr.status);
+            }
+
+        }
+        else
+        {
+            info.appendChild(spinner);
+        }
+
+    };
+
+    xhr.open('POST', 'http://localhost:3000/bajaPersona', true); //abre la conexion( metodo , URL, que sea asincronico y no se quede esperando el retorno)
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.send(JSON.stringify(persona));
+
+    // con POST LOS DATOS PASAR POR SEND
+}
+
+//Devuelve un string con la descripción de atributos y valores del objeto pasado por parámetro.
+function personaToString(persona)
+{
+    var texto = "";
+    var retornoCarro = false;
+
+    for(var atributo in persona)
+    {
+        if(retornoCarro) //Para que no haga retorno de carro en la primera línea
+        {
+            texto += "\n";
+        }
+        else
+        {
+            retornoCarro = true;
+        }
+
+        texto += atributo.toUpperCase() + ": " + persona[atributo];
+    }
+
+    return texto;
+}
+
+//Crea la tabla de personas en el div info
 function crearTabla()
 {
-    tabla = document.createElement("table");
+    var tablaPersonas = document.createElement("table");
     var puedeCrearDetalle = true; //Si no tengo elementos desde el servidor cambia a false.
+    var div = document.getElementById("info");
 
-    tabla.setAttribute("border", "1px");
-    tabla.style.borderCollapse = "collapse"
-    tabla.setAttribute("id", "tablaPersonas");
-    div.appendChild(tabla);
+    tablaPersonas.setAttribute("border", "1px");
+    tablaPersonas.style.borderCollapse = "collapse"
+    tablaPersonas.setAttribute("id", "tablaPersonas");
+    div.appendChild(tablaPersonas);
 
     if(typeof personas[0] != "object") //Si el servidor no trae nada creo la estructura vacía.
     {
@@ -133,21 +223,24 @@ function crearTabla()
         puedeCrearDetalle = false;
     }
 
-    crearCabecera(tabla);
+    crearCabecera(tablaPersonas);
 
     if(puedeCrearDetalle)
     {
-        crearDetalle(tabla, personas);
+        crearDetalle(tablaPersonas, personas);
     }
 }
 
+//Crea el formulario de edición de personas en el div info.
+//El atributo id lo crea como solo lectura, ya que el servidor en el alta lo deduce,
+//y en la modificación no se altera su valor.
 function crearFormulario()
 {
-    //var div = document.getElementById("info");
+    var div = document.getElementById("info");
     var formulario = document.createElement("form");
     var grupo = document.createElement("fieldset");
     var leyenda = document.createElement("legend");
-    var tabla = document.createElement("table");
+    var tablaFormulario = document.createElement("table");
     var botonAgregar = document.createElement("input");
     var botonModificar = document.createElement("input");
     var botonBorrar = document.createElement("input");
@@ -162,7 +255,7 @@ function crearFormulario()
     formulario.appendChild(grupo);
 
     grupo.appendChild(leyenda);
-    grupo.appendChild(tabla);
+    grupo.appendChild(tablaFormulario);
 
     leyenda.textContent = "Persona";
 
@@ -175,7 +268,7 @@ function crearFormulario()
         var atributoCapitalizado = atributo.charAt(0).toUpperCase() + atributo.slice(1).toLowerCase(); //Primer letra en mayuscula, resto minuscula
         var cuadroTexto = document.createElement("input");
 
-        tabla.appendChild(fila);
+        tablaFormulario.appendChild(fila);
 
         fila.appendChild(columnaEtiqueta);
         fila.appendChild(columnaTexto);
@@ -207,6 +300,7 @@ function crearFormulario()
     botonBorrar.setAttribute("type", "button");
     botonBorrar.setAttribute("id", "btnBorrar");
     botonBorrar.value = "Borrar";
+    botonBorrar.addEventListener("click", opcionBorrarPersona, false);
 
     botonCancelar.setAttribute("type", "button");
     botonCancelar.setAttribute("id", "btnCancelar");
@@ -219,11 +313,12 @@ function crearFormulario()
     grupo.appendChild(botonCancelar);
 }
 
-function crearCabecera(tabla)
+//Crea la fila de cabecera, con tantas columnas como atributos posea la persona, en la tabla de personas.
+function crearCabecera(tablaPersonas)
 {
     var filaCabecera = document.createElement("tr");
     var columna;
-    tabla.appendChild(filaCabecera);
+    tablaPersonas.appendChild(filaCabecera);
     for(var atributo in personas[0])
     {
         columna = document.createElement("th");
@@ -232,7 +327,8 @@ function crearCabecera(tabla)
     }
 }
 
-function crearDetalle(tabla, datos)
+//Crea tantas fila de detalle en la tabla de personas como personas haya cargadas.
+function crearDetalle(tablaPersonas, datos)
 {
     for(var i = 0; i < datos.length; i++)
     {
@@ -240,7 +336,7 @@ function crearDetalle(tabla, datos)
         var atributo;
         var columna;
         filaDetalle.addEventListener("click", pintarFila, false);
-        tabla.appendChild(filaDetalle);
+        tablaPersonas.appendChild(filaDetalle);
 
         for(atributo in datos[i])
         {
@@ -252,14 +348,17 @@ function crearDetalle(tabla, datos)
     }
 }
 
+//Cuando el usuario hace click en una fila de detalle de la tabla de personas,
+//la función le setea, previo a blanquear si hay otra fila antes seleccionada, 
+//el atributo id a la fila y carga la persona en el array de persona seleccionada.
 function pintarFila()
 {
     var atributo;
 
     document.getElementById("btnEditarPersona").removeAttribute("disabled", "");
-    blanquearFilas();
+    blanquearFila();
     
-    this.setAttribute("class", "filaSeleccionada");
+    this.setAttribute("id", "filaSeleccionada");
     atributo = this.firstElementChild;
 
     do
@@ -269,16 +368,32 @@ function pintarFila()
     } while(atributo != null);
 }
 
-function blanquearFilas()
+//Quita el atributo id de la fila seleccionada.
+function blanquearFila()
 {
-    var filaPintada = document.getElementsByClassName("filaSeleccionada");
+    var filaSeleccionada = document.getElementById("filaSeleccionada");
 
-    for(var i = 0; i < filaPintada.length; i++)
+    if(filaSeleccionada) //Si hay una fila seleccionada, le quito el id
+    {
+        filaSeleccionada.removeAttribute("id");
+    }
+
+    /*for(var i = 0; i < filaPintada.length; i++)
     {
         filaPintada[i].removeAttribute("class");
-    }
+    }*/
 }
 
+//Elimina de la tabla de personas la fila seleccionada por el usuario.
+//Esta función la invoca la opción de borrar una persona del servidor,
+//una vez devuelto el ok del mismo.
+function borrarFila(tabla)
+{
+    tabla.removeChild(document.getElementById("filaSeleccionada"));
+}
+
+//Oculta la tabla de personas, y muestra el formulario invocando la función pertinente
+//sin parámetro. Lo invoca el botón de Alta del menú
 function altaPersona()
 {
     document.getElementById("btnAltaPersona").setAttribute("disabled", "");
@@ -290,6 +405,8 @@ function altaPersona()
     mostrarFormulario();
 }
 
+//Oculta la tabla de personas, y muestra el formulario invocando la función pertinente
+//pasándole por parámetro la persona que se quiere editar. Lo invoca el botón de Editar del menú
 function editarPersona()
 {
     document.getElementById("btnAltaPersona").setAttribute("disabled", "");
@@ -301,11 +418,18 @@ function editarPersona()
     mostrarFormulario(personaSeleccionada);
 }
 
+//Arma el formulario de edición de personas.
+//Si no se le pasa parámetro asume que se trata de un alta, para ello muestra el botón
+//que invoca la función de alta en el servidor y los cuadros de texto de los parámetros
+//en blanco.
+//Si se invoca con un objeto, la función asume modificación o baja de la persona que viene
+//por parámetro, mostrando los botones que invocan las funciones respectivas en el servidor,
+//y completa los cuadros de texto con los valores de cada atributo.
 function mostrarFormulario()
 {
     var datos;
 
-    if(typeof arguments[0] == "object")
+    if(typeof arguments[0] == "object") //Es de tipo object si vino un argumento en los parámetros formales de la función.
     {
         datos = arguments[0];
 
@@ -335,12 +459,14 @@ function mostrarFormulario()
     }
 }
 
+//Oculta el formulario de edición y muestra la tabla de personas.
+//Se blanquea cualquier fila que se haya previamente seleccionado.
 function ocultarFormulario()
 {
     document.getElementById("btnAltaPersona").removeAttribute("disabled");
     document.getElementById("btnEditarPersona").setAttribute("disabled", "");
 
-    blanquearFilas();
+    blanquearFila();
 
     document.getElementById("tablaPersonas").style.display = "table";
     document.getElementById("formularioPersonas").style.display = "none";
