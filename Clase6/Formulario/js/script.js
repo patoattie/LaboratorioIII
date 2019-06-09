@@ -438,6 +438,9 @@ function borrarFilaSeleccionada(tabla)
     tabla.removeChild(document.getElementById("filaSeleccionada"));
 }
 
+//Modifica los datos de la fila seleccionada con los datos de la persona pasada por parámetro.
+//Esta función la invoca la opción de modificar una persona del servidor,
+//una vez devuelto el ok del mismo.
 function modificarFilaSeleccionada(datos)
 {
     var filaSeleccionada = document.getElementById("filaSeleccionada");
@@ -445,7 +448,7 @@ function modificarFilaSeleccionada(datos)
     //Recorro las columnas de la fila seleccionada, guardando un atributo por columna en personaSeleccionada.
     for(var i = 0; i < filaSeleccionada.childNodes.length; i++)
     {
-        personaSeleccionada[filaSeleccionada.childNodes[i].getAttribute("class")] = filaSeleccionada.childNodes[i].textContent;
+        filaSeleccionada.childNodes[i].textContent = datos[filaSeleccionada.childNodes[i].getAttribute("class")];
     }
 }
 
