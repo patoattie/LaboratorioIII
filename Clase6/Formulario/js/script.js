@@ -1,7 +1,7 @@
 addEventListener("load", asignarManejadores, false);
 
 var personas = [];
-var personaSeleccionada = [];
+var personaSeleccionada = {};
 
 //Al dispararse el evento load cuando se termina de cargar la página web, 
 //se instancian los manejadores del evento click de los tres botones del menú.
@@ -74,11 +74,11 @@ function traerPersonas()
 //Llamador usado por el evento del botón de Agregar del formulario
 function opcionAgregarPersona()
 {
-    agregarPersona(construirPersonaJSON());
+    agregarPersona(personaEditada());
 }
 
 //Crea un objeto JSON a partir de los datos del formulario
-function construirPersonaJSON()
+function personaEditada()
 {
     var persona = {};
 
@@ -132,7 +132,7 @@ function agregarPersona(persona)
 //Llamador usado por el evento del botón de Borrar del formulario
 function opcionBorrarPersona()
 {
-    borrarPersona(construirPersonaJSON());
+    borrarPersona(personaSeleccionada);
 }
 
 //Llama a la función bajaPersona del servidor, pasándole el objeto que se quiere eliminar por parámetro.
@@ -153,7 +153,7 @@ function borrarPersona(persona)
                 if(respuesta.todoOk === 1)
                 {
                     alert("Persona:\n\n" + personaToString(persona) + "\n\nfue borrada de la tabla");
-                    borrarFila(document.getElementById("tablaPersonas"));
+                    borrarFilaSeleccionada(document.getElementById("tablaPersonas"));
                 }
                 else
                 {
@@ -185,11 +185,11 @@ function borrarPersona(persona)
 //Llamador usado por el evento del botón de Modificar del formulario
 function opcionModificarPersona()
 {
-    modificarPersona(construirPersonaJSON());
+    modificarPersona(personaSeleccionada, personaEditada());
 }
 
 //Llama a la función modificarPersona del servidor, pasándole el objeto que se quiere modificar por parámetro.
-function modificarPersona(persona)
+function modificarPersona(personaPre, personaPost)
 {
     var xhr = new XMLHttpRequest();
     var spinner = crearSpinner();
@@ -205,12 +205,12 @@ function modificarPersona(persona)
 
                 if(respuesta.todoOk === 1)
                 {
-                    alert("Persona:\n\n" + personaToString(persona) + "\n\nfue borrada de la tabla");
-                    borrarFila(document.getElementById("tablaPersonas"));
+                    alert("Persona:\n\n" + personaToString(personaPre) + "\n\nfue modificada a:\n\n" + personaToString(personaPost));
+                    modificarFilaSeleccionada(personaPost);
                 }
                 else
                 {
-                    alert("Error al borrar persona. No se hicieron cambios");
+                    alert("Error al modificar persona. No se hicieron cambios");
                 }
 
                 ocultarFormulario();
@@ -228,9 +228,9 @@ function modificarPersona(persona)
 
     };
 
-    xhr.open('POST', 'http://localhost:3000/bajaPersona', true); //abre la conexion( metodo , URL, que sea asincronico y no se quede esperando el retorno)
+    xhr.open('POST', 'http://localhost:3000/modificarPersona', true); //abre la conexion( metodo , URL, que sea asincronico y no se quede esperando el retorno)
     xhr.setRequestHeader('Content-type', 'application/json');
-    xhr.send(JSON.stringify(persona));
+    xhr.send(JSON.stringify(personaPost));
 
     // con POST LOS DATOS PASAR POR SEND
 }
@@ -389,7 +389,7 @@ function crearDetalle(tablaPersonas, datos)
         var filaDetalle = document.createElement("tr");
         var atributo;
         var columna;
-        filaDetalle.addEventListener("click", pintarFila, false);
+        filaDetalle.addEventListener("click", seleccionarFila, false);
         tablaPersonas.appendChild(filaDetalle);
 
         for(atributo in datos[i])
@@ -405,21 +405,18 @@ function crearDetalle(tablaPersonas, datos)
 //Cuando el usuario hace click en una fila de detalle de la tabla de personas,
 //la función le setea, previo a blanquear si hay otra fila antes seleccionada, 
 //el atributo id a la fila y carga la persona en el array de persona seleccionada.
-function pintarFila()
+function seleccionarFila()
 {
-    var atributo;
-
     document.getElementById("btnEditarPersona").removeAttribute("disabled", "");
     blanquearFila();
     
     this.setAttribute("id", "filaSeleccionada");
-    atributo = this.firstElementChild;
 
-    do
+    //Recorro las columnas de la fila seleccionada, guardando un atributo por columna en personaSeleccionada.
+    for(var i = 0; i < this.childNodes.length; i++)
     {
-        personaSeleccionada[atributo.getAttribute("class")] = atributo.childNodes[0];
-        atributo = atributo.nextElementSibling;
-    } while(atributo != null);
+        personaSeleccionada[this.childNodes[i].getAttribute("class")] = this.childNodes[i].textContent;
+    }
 }
 
 //Quita el atributo id de la fila seleccionada.
@@ -431,19 +428,25 @@ function blanquearFila()
     {
         filaSeleccionada.removeAttribute("id");
     }
-
-    /*for(var i = 0; i < filaPintada.length; i++)
-    {
-        filaPintada[i].removeAttribute("class");
-    }*/
 }
 
 //Elimina de la tabla de personas la fila seleccionada por el usuario.
 //Esta función la invoca la opción de borrar una persona del servidor,
 //una vez devuelto el ok del mismo.
-function borrarFila(tabla)
+function borrarFilaSeleccionada(tabla)
 {
     tabla.removeChild(document.getElementById("filaSeleccionada"));
+}
+
+function modificarFilaSeleccionada(datos)
+{
+    var filaSeleccionada = document.getElementById("filaSeleccionada");
+
+    //Recorro las columnas de la fila seleccionada, guardando un atributo por columna en personaSeleccionada.
+    for(var i = 0; i < filaSeleccionada.childNodes.length; i++)
+    {
+        personaSeleccionada[filaSeleccionada.childNodes[i].getAttribute("class")] = filaSeleccionada.childNodes[i].textContent;
+    }
 }
 
 //Oculta la tabla de personas, y muestra el formulario invocando la función pertinente
@@ -504,7 +507,7 @@ function mostrarFormulario()
 
         if(typeof datos == "object")
         {
-            document.getElementById("txt" + atributoCapitalizado).value = datos[atributo].nodeValue;
+            document.getElementById("txt" + atributoCapitalizado).value = datos[atributo];
         }
         else
         {
