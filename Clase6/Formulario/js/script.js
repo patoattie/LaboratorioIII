@@ -182,6 +182,59 @@ function borrarPersona(persona)
     // con POST LOS DATOS PASAR POR SEND
 }
 
+//Llamador usado por el evento del botón de Modificar del formulario
+function opcionModificarPersona()
+{
+    modificarPersona(construirPersonaJSON());
+}
+
+//Llama a la función modificarPersona del servidor, pasándole el objeto que se quiere modificar por parámetro.
+function modificarPersona(persona)
+{
+    var xhr = new XMLHttpRequest();
+    var spinner = crearSpinner();
+
+    xhr.onreadystatechange = function()
+    {
+        if (this.readyState == XMLHttpRequest.DONE)
+        {
+            if (this.status == 200)
+            {
+                var respuesta = JSON.parse(xhr.responseText);
+                info.removeChild(spinner);
+
+                if(respuesta.todoOk === 1)
+                {
+                    alert("Persona:\n\n" + personaToString(persona) + "\n\nfue borrada de la tabla");
+                    borrarFila(document.getElementById("tablaPersonas"));
+                }
+                else
+                {
+                    alert("Error al borrar persona. No se hicieron cambios");
+                }
+
+                ocultarFormulario();
+            }
+            else
+            {
+                console.log("error: " + xhr.status);
+            }
+
+        }
+        else
+        {
+            info.appendChild(spinner);
+        }
+
+    };
+
+    xhr.open('POST', 'http://localhost:3000/bajaPersona', true); //abre la conexion( metodo , URL, que sea asincronico y no se quede esperando el retorno)
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.send(JSON.stringify(persona));
+
+    // con POST LOS DATOS PASAR POR SEND
+}
+
 //Devuelve un string con la descripción de atributos y valores del objeto pasado por parámetro.
 function personaToString(persona)
 {
@@ -296,6 +349,7 @@ function crearFormulario()
     botonModificar.setAttribute("type", "button");
     botonModificar.setAttribute("id", "btnModificar");
     botonModificar.value = "Modificar";
+    botonModificar.addEventListener("click", opcionModificarPersona, false);
 
     botonBorrar.setAttribute("type", "button");
     botonBorrar.setAttribute("id", "btnBorrar");
