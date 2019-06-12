@@ -59,9 +59,20 @@
   padding: 16px;
 }
 
+.tablaPersonas th
+{
+  text-decoration: underline;
+  font-style: italic;
+}
+
 .tablaPersonas tr:nth-child(even)
 {
   background-color: #f2f2f2
+}
+
+.tablaPersonas tr:hover
+{
+  font-weight: bold;
 }
 
 /*-------------------------------------------------------------*/
@@ -130,12 +141,4 @@ input[type=button]
 #btnCancelar:hover
 {
   background-color: #778899;
-}
-
-/* Add a background color and some padding around the form */
-.container
-{
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
 }
