@@ -310,7 +310,7 @@ function crearFormulario()
     var formulario = document.createElement("form");
     var grupo = document.createElement("fieldset");
     var leyenda = document.createElement("legend");
-    var tablaFormulario = document.createElement("table");
+    //var tablaFormulario = document.createElement("table");
     var botonAgregar = document.createElement("input");
     var botonModificar = document.createElement("input");
     var botonBorrar = document.createElement("input");
@@ -325,23 +325,23 @@ function crearFormulario()
     formulario.appendChild(grupo);
 
     grupo.appendChild(leyenda);
-    grupo.appendChild(tablaFormulario);
+    //grupo.appendChild(tablaFormulario);
 
     leyenda.textContent = "Persona";
 
     for(var atributo in personas[0])
     {
-        var fila = document.createElement("tr");
-        var columnaEtiqueta = document.createElement("td");
-        var columnaTexto = document.createElement("td");
+        //var fila = document.createElement("tr");
+        //var columnaEtiqueta = document.createElement("td");
+        //var columnaTexto = document.createElement("td");
         var etiqueta = document.createElement("label");
         var atributoCapitalizado = atributo.charAt(0).toUpperCase() + atributo.slice(1).toLowerCase(); //Primer letra en mayuscula, resto minuscula
         var cuadroTexto = document.createElement("input");
 
-        tablaFormulario.appendChild(fila);
+        //tablaFormulario.appendChild(fila);
 
-        fila.appendChild(columnaEtiqueta);
-        fila.appendChild(columnaTexto);
+        //fila.appendChild(columnaEtiqueta);
+        //fila.appendChild(columnaTexto);
 
         etiqueta.setAttribute("for", "txt" + atributoCapitalizado);
         etiqueta.textContent = atributoCapitalizado + ": ";
@@ -353,9 +353,11 @@ function crearFormulario()
             cuadroTexto.setAttribute("readonly", "");
         }
 
-        columnaEtiqueta.appendChild(etiqueta);
+        //columnaEtiqueta.appendChild(etiqueta);
+        grupo.appendChild(etiqueta);
 
-        columnaTexto.appendChild(cuadroTexto);
+        //columnaTexto.appendChild(cuadroTexto);
+        grupo.appendChild(cuadroTexto);
     }
 
     botonAgregar.setAttribute("type", "button");
