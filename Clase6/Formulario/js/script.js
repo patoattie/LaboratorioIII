@@ -31,6 +31,15 @@ function crearSpinner()
     return spinner;
 }
 
+function activarMenu(elemento)
+{
+    if(document.getElementsByClassName("active")[0])
+    {
+        document.getElementsByClassName("active")[0].removeAttribute("class");
+    }
+    elemento.setAttribute("class", "active");
+}
+
 //Llama a la función traerPersonas del servidor, luego con los datos devueltos se crean en el DOM la tabla y el formulario de edición.
 function traerPersonas()
 {
@@ -39,6 +48,8 @@ function traerPersonas()
     var spinner = crearSpinner();
 
     info.innerHTML = "";
+
+    activarMenu(document.getElementById("btnGetPersona"));
 
     xhr.onreadystatechange = function() //0 al 4 son los estados, 4 es el estado DONE
     {
@@ -53,15 +64,20 @@ function traerPersonas()
                 crearTabla();
                 crearFormulario();
 
-                document.getElementById("btnGetPersona").removeAttribute("disabled");
-                document.getElementById("btnAltaPersona").removeAttribute("disabled");
+                //document.getElementById("btnGetPersona").removeAttribute("disabled");
+                //document.getElementById("btnAltaPersona").removeAttribute("disabled");
+                document.getElementById("btnGetPersona").style.pointerEvents = "auto";
+                document.getElementById("btnAltaPersona").style.pointerEvents = "auto";
             }
         }
         else
         {
-            document.getElementById("btnGetPersona").setAttribute("disabled", "");
-            document.getElementById("btnAltaPersona").setAttribute("disabled", "");
-            document.getElementById("btnEditarPersona").setAttribute("disabled", "");
+            //document.getElementById("btnGetPersona").setAttribute("disabled", "");
+            //document.getElementById("btnAltaPersona").setAttribute("disabled", "");
+            //document.getElementById("btnEditarPersona").setAttribute("disabled", "");
+            document.getElementById("btnGetPersona").style.pointerEvents = "none";
+            document.getElementById("btnAltaPersona").style.pointerEvents = "none";
+            document.getElementById("btnEditarPersona").style.pointerEvents = "none";
     
             info.appendChild(spinner);
         }
@@ -71,7 +87,7 @@ function traerPersonas()
     xhr.send(); //se envia la peticion al servidor
 }
 
-//Llamador usado por el evento del botón de Agregar del formulario
+//Llamador usado por el evento dla opción de Agregar del formulario
 function opcionAgregarPersona()
 {
     agregarPersona(personaEditada());
@@ -129,7 +145,7 @@ function agregarPersona(persona)
     // con POST LOS DATOS PASAR POR SEND
 }
 
-//Llamador usado por el evento del botón de Borrar del formulario
+//Llamador usado por el evento dla opción de Borrar del formulario
 function opcionBorrarPersona()
 {
     borrarPersona(personaSeleccionada);
@@ -182,7 +198,7 @@ function borrarPersona(persona)
     // con POST LOS DATOS PASAR POR SEND
 }
 
-//Llamador usado por el evento del botón de Modificar del formulario
+//Llamador usado por el evento dla opción de Modificar del formulario
 function opcionModificarPersona()
 {
     modificarPersona(personaSeleccionada, personaEditada());
@@ -407,7 +423,8 @@ function crearDetalle(tablaPersonas, datos)
 //el atributo id a la fila y carga la persona en el array de persona seleccionada.
 function seleccionarFila()
 {
-    document.getElementById("btnEditarPersona").removeAttribute("disabled", "");
+    //document.getElementById("btnEditarPersona").removeAttribute("disabled");
+    document.getElementById("btnEditarPersona").style.pointerEvents = "auto";
     blanquearFila();
     
     this.setAttribute("id", "filaSeleccionada");
@@ -453,11 +470,15 @@ function modificarFilaSeleccionada(datos)
 }
 
 //Oculta la tabla de personas, y muestra el formulario invocando la función pertinente
-//sin parámetro. Lo invoca el botón de Alta del menú
+//sin parámetro. Lo invoca la opción de Alta del menú
 function altaPersona()
 {
-    document.getElementById("btnAltaPersona").setAttribute("disabled", "");
-    document.getElementById("btnEditarPersona").setAttribute("disabled", "");
+    activarMenu(document.getElementById("btnAltaPersona"));
+
+    //document.getElementById("btnAltaPersona").setAttribute("disabled", "");
+    //document.getElementById("btnEditarPersona").setAttribute("disabled", "");
+    document.getElementById("btnAltaPersona").style.pointerEvents = "none";
+    document.getElementById("btnEditarPersona").style.pointerEvents = "none";
 
     document.getElementById("tablaPersonas").style.display = "none";
     document.getElementById("formularioPersonas").style.display = "initial";
@@ -466,11 +487,15 @@ function altaPersona()
 }
 
 //Oculta la tabla de personas, y muestra el formulario invocando la función pertinente
-//pasándole por parámetro la persona que se quiere editar. Lo invoca el botón de Editar del menú
+//pasándole por parámetro la persona que se quiere editar. Lo invoca la opción de Editar del menú
 function editarPersona()
 {
-    document.getElementById("btnAltaPersona").setAttribute("disabled", "");
-    document.getElementById("btnEditarPersona").setAttribute("disabled", "");
+    activarMenu(document.getElementById("btnEditarPersona"));
+
+    //document.getElementById("btnAltaPersona").setAttribute("disabled", "");
+    //document.getElementById("btnEditarPersona").setAttribute("disabled", "");
+    document.getElementById("btnAltaPersona").style.pointerEvents = "none";
+    document.getElementById("btnEditarPersona").style.pointerEvents = "none";
 
     document.getElementById("tablaPersonas").style.display = "none";
     document.getElementById("formularioPersonas").style.display = "initial";
@@ -479,7 +504,7 @@ function editarPersona()
 }
 
 //Arma el formulario de edición de personas.
-//Si no se le pasa parámetro asume que se trata de un alta, para ello muestra el botón
+//Si no se le pasa parámetro asume que se trata de un alta, para ello muestra la opción
 //que invoca la función de alta en el servidor y los cuadros de texto de los parámetros
 //en blanco.
 //Si se invoca con un objeto, la función asume modificación o baja de la persona que viene
@@ -523,8 +548,12 @@ function mostrarFormulario()
 //Se blanquea cualquier fila que se haya previamente seleccionado.
 function ocultarFormulario()
 {
-    document.getElementById("btnAltaPersona").removeAttribute("disabled");
-    document.getElementById("btnEditarPersona").setAttribute("disabled", "");
+    activarMenu(document.getElementById("btnGetPersona"));
+
+    //document.getElementById("btnAltaPersona").removeAttribute("disabled");
+    //document.getElementById("btnEditarPersona").setAttribute("disabled", "");
+    document.getElementById("btnAltaPersona").style.pointerEvents = "auto";
+    document.getElementById("btnEditarPersona").style.pointerEvents = "none";
 
     blanquearFila();
 
