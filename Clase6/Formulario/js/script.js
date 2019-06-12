@@ -284,6 +284,7 @@ function crearTabla()
     tablaPersonas.setAttribute("border", "1px");
     tablaPersonas.style.borderCollapse = "collapse"
     tablaPersonas.setAttribute("id", "tablaPersonas");
+    tablaPersonas.setAttribute("class", "tablaPersonas");
     div.appendChild(tablaPersonas);
 
     if(typeof personas[0] != "object") //Si el servidor no trae nada creo la estructura vacía.
