@@ -29,6 +29,12 @@
 		},
 		{
 			"path": "ServidorPersonas"
+		},
+		{
+			"path": "mapReduceFilter"
+		},
+		{
+			"path": "Clase8"
 		}
 	],
 	"settings": {
