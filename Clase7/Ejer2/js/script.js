@@ -2,7 +2,7 @@ window.addEventListener('load', asignarManejadores, false);
 
 function asignarManejadores() {
 
-    document.getElementById('getPersonas').addEventListener('click', traerPersonas, false);
+    document.getElementById('getPersonas').addEventListener('click', traerPersonasJQ, false);
 
     document.forms[0].addEventListener('submit', e => {
         e.preventDefault();
@@ -145,17 +145,6 @@ function traerPersonas() {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
 function personaToString(persona) {
     var cadena = '';
     for (var prop in persona) {
@@ -164,12 +153,20 @@ function personaToString(persona) {
     return cadena;
 }
 
-
-
 function ponerSpinner() {
     var spinner = document.createElement('img');
     spinner.setAttribute('src', 'image/preloader.gif');
     spinner.setAttribute('alt', 'spinner');
 
     return spinner;
+}
+
+function traerPersonasJQ()
+{
+    $.get("http://localhost:3000/traerPersonas", 
+    function(data, status)
+    {
+        console.log(data);
+        console.log(status);
+    });
 }
