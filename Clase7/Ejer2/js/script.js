@@ -6,7 +6,7 @@ function asignarManejadores() {
 
     document.forms[0].addEventListener('submit', e => {
         e.preventDefault();
-        agregarPersona(newPersona());
+        agregarPersonaJQ(newPersona());
     }, false);
 
     document.forms[1].addEventListener('submit', e => {
@@ -167,6 +167,82 @@ function traerPersonasJQ()
     function(data, status)
     {
         console.log(data);
-        console.log(status);
+        console.log(typeof data);
+        //console.log(status);
+
+        var objPersona = JSON.parse(data);
+        console.log(objPersona);
+        console.log(typeof objPersona);
+    });
+}
+
+function agregarPersonaJQ(persona) {
+    //var info = document.getElementById('sep');
+
+    var personaRta;
+
+    /*var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (this.status == 200) {
+                personaRta = JSON.parse(xhr.responseText);
+
+                document.getElementById('id').value = personaRta.id;
+                document.getElementById('nombre').value = personaRta.nombre;
+                document.getElementById('apellido').value = personaRta.apellido;
+                document.getElementById('edad').value = personaRta.edad;
+
+                info.innerHTML = " ";
+
+                //traerPersonas();
+
+            }
+
+        }
+        else
+        {
+            info.appendChild(ponerSpinner()); //mientras no responde positivo muestra manejador
+        }
+
+    };
+
+    xhr.open('POST', 'http://localhost:3000/altaPersona', true); //abre la conexion( metodo , URL, que sea asincronico y no se quede esperando el retorno)
+
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.send(JSON.stringify(persona));*/
+
+    // con POST LOS DATOS PASAR POR SEND
+
+    $.ajax({
+        url: 'http://localhost:3000/altaPersona',
+        contentType: 'application/json',
+        type: 'POST',
+        data: JSON.stringify(persona),
+        beforeSend: function()
+        {
+            $("#sep").spinner({redius: 3, width: 2, height: 2, length: 4});
+        },
+        success: function(info)
+        {
+            console.log(info);
+
+            $('#id').attr("value", personaRta.id);
+            $('#nombre').attr("value", personaRta.nombre);
+            $('#apellido').attr("value", personaRta.apellido);
+            $('#edad').attr("value", personaRta.edad);
+    },
+        error: function(xhr, estado, error)
+        {
+            console.log(estado);
+            console.log(error);
+        },
+        complete: function(xhr, estado)
+        {
+            console.log(estado);
+            $("#sep").html(" "); //Limpio el spinner
+        },
+        timeout: 10000,
     });
 }
