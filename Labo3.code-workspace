@@ -1,9 +1,6 @@
 {
 	"folders": [
 		{
-			"path": "Clase1"
-		},
-		{
 			"path": "Clase2"
 		},
 		{
@@ -38,9 +35,12 @@
 		},
 		{
 			"path": "Clase10"
+		},
+		{
+			"path": "Clase01"
 		}
 	],
 	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "Clase1"
+		"liveServer.settings.multiRootWorkspaceName": "Clase10"
 	}
 }
