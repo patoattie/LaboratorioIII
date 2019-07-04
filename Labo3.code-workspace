@@ -41,6 +41,9 @@
 		},
 		{
 			"path": "ClaseJQuery"
+		},
+		{
+			"path": "ClaseBootstrap4"
 		}
 	],
 	"settings": {
