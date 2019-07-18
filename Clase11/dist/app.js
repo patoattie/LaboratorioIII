@@ -7,3 +7,4 @@ function f1(a, b) {
 }
 var unaFuncion;
 unaFuncion = f1;
+console.log(unaFuncion(15, " pepe"));

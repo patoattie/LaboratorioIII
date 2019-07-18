@@ -9,9 +9,11 @@ function f1(a:number, b:string):string
     return a + b;
 }
 
-let unaFuncion:(number, string)=>string;
+let unaFuncion:(a:number, b:string)=>string;
 
 unaFuncion = f1;
+
+console.log(unaFuncion(15, " pepe"));
 
 //npm install -g typescript
 //tsc --init

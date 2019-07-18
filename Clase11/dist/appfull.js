@@ -16,43 +16,64 @@ var Destinos;
     Destinos[Destinos["marte"] = 0] = "marte";
     Destinos[Destinos["luna"] = 1] = "luna";
 })(Destinos || (Destinos = {}));
-var Cohete = /** @class */ (function () {
-    function Cohete(nombre, precio) {
-        this.nombre = nombre;
-        this.precio = precio;
-        this.destino = Destinos[Destinos.luna];
-    }
-    Cohete.prototype.launch = function () {
-        console.log("Lanzando el cohete " + this.nombre + " con destino a " + this.destino);
-    };
-    return Cohete;
-}());
-//C:\TEST\pattie\LaboratorioIII\Clase11>C:\TEST\pattie\node-v12.3.1-win-x64\npm install -s @types jquery
-//tsc -out ./dist/appfull.js Destinos Cohete Nasa Subsidiaria app
-var Nasa = /** @class */ (function () {
-    function Nasa(director, creacion) {
-        this.director = director;
-        this.creacion = creacion;
-        this.cohetes = [];
-    }
-    Nasa.prototype.agregarCohete = function (rocket) {
-        this.cohetes.push(rocket);
-    };
-    Nasa.prototype.lanzarCohete = function (rocket) {
-        rocket.launch();
-    };
-    return Nasa;
-}());
-var Subsidiaria = /** @class */ (function (_super) {
-    __extends(Subsidiaria, _super);
-    function Subsidiaria(director, creacion, nombre) {
-        var _this = _super.call(this, director, creacion) || this;
-        _this.nombre = nombre;
-        return _this;
-    }
-    return Subsidiaria;
-}(Nasa));
-var laNasa = new Nasa("John Smith", 1945);
-var unCohete = new Cohete("Apolo XI", 100000000);
+var Espacial;
+(function (Espacial) {
+    var Cohete = /** @class */ (function () {
+        function Cohete(nombre, precio) {
+            this.nombre = nombre;
+            this.precio = precio;
+            this.destino = Destinos[Destinos.luna];
+        }
+        Cohete.prototype.launch = function () {
+            console.log("Lanzando el cohete " + this.nombre + " con destino a " + this.destino);
+        };
+        return Cohete;
+    }());
+    Espacial.Cohete = Cohete;
+})(Espacial || (Espacial = {}));
+var Espacial;
+(function (Espacial) {
+    var Nasa = /** @class */ (function () {
+        function Nasa(director, creacion) {
+            this.director = director;
+            this.creacion = creacion;
+            this.cohetes = [];
+        }
+        Nasa.prototype.agregarCohete = function (rocket) {
+            this.cohetes.push(rocket);
+        };
+        Nasa.prototype.lanzarCohete = function (rocket) {
+            rocket.launch();
+        };
+        return Nasa;
+    }());
+    Espacial.Nasa = Nasa;
+})(Espacial || (Espacial = {}));
+var Espacial;
+(function (Espacial) {
+    var Subsidiaria = /** @class */ (function (_super) {
+        __extends(Subsidiaria, _super);
+        function Subsidiaria(director, creacion, nombre) {
+            var _this = _super.call(this, director, creacion) || this;
+            _this.nombre = nombre;
+            return _this;
+        }
+        return Subsidiaria;
+    }(Espacial.Nasa));
+    Espacial.Subsidiaria = Subsidiaria;
+})(Espacial || (Espacial = {}));
+var laNasa = new Espacial.Nasa("John Smith", 1945);
+var unCohete = new Espacial.Cohete("Apolo XI", 100000000);
 laNasa.agregarCohete(unCohete);
 laNasa.lanzarCohete(unCohete);
+function f1(a, b) {
+    return a + b;
+}
+var unaFuncion;
+unaFuncion = f1;
+console.log(unaFuncion(15, " pepe"));
+//npm install -g typescript
+//tsc --init
+//tsc -w
+//npm install -s @types jquery
+//tsc --outFile ./dist/appfull.js Destinos.ts Cohete.ts Nasa.ts Subsidiaria.ts app.ts
