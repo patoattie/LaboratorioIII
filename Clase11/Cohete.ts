@@ -21,7 +21,7 @@ namespace Espacial
 }
 
 //npm install -g typescript
-//tsc -init
+//tsc --init
 //tsc -w
 //npm install -s @types jquery
 //tsc -out ./dist/appfull.js Destinos.ts Cohete.ts Nasa.ts Subsidiaria.ts app.ts

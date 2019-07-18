@@ -13,7 +13,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Espacial;
 (function (Espacial) {
-    var Subsidiaria = /** @class */ (function (_super) {
+    var Subsidiaria = (function (_super) {
         __extends(Subsidiaria, _super);
         function Subsidiaria(director, creacion, nombre) {
             var _this = _super.call(this, director, creacion) || this;

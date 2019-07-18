@@ -1,6 +1,6 @@
 var Espacial;
 (function (Espacial) {
-    var Nasa = /** @class */ (function () {
+    var Nasa = (function () {
         function Nasa(director, creacion) {
             this.director = director;
             this.creacion = creacion;
