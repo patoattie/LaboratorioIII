@@ -44,9 +44,12 @@
 		},
 		{
 			"path": "ClaseBootstrap4"
+		},
+		{
+			"path": "Clase11"
 		}
 	],
 	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "Clase10"
+		"liveServer.settings.multiRootWorkspaceName": "Clase11"
 	}
 }

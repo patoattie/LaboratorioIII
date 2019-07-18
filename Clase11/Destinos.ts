@@ -1,0 +1,5 @@
+enum Destinos
+{
+    marte,
+    luna
+}
