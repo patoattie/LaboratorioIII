@@ -1,11 +1,14 @@
-class Subsidiaria extends Nasa
+namespace Espacial
 {
-    nombre:string;
-
-    constructor(director:string, creacion:number, nombre:string)
+    export class Subsidiaria extends Nasa
     {
-        super(director, creacion);
+        nombre:string;
 
-        this.nombre = nombre;
+        constructor(director:string, creacion:number, nombre:string)
+        {
+            super(director, creacion);
+
+            this.nombre = nombre;
+        }
     }
 }

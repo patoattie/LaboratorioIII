@@ -1,21 +1,27 @@
-class Cohete
+namespace Espacial
 {
-    nombre:string;
-    precio:number;
-    destino:typeof Destinos[0];
-
-    constructor(nombre:string, precio:number)
+    export class Cohete
     {
-        this.nombre = nombre;
-        this.precio = precio;
-        this.destino = Destinos[Destinos.luna];
-    }
+        nombre:string;
+        precio:number;
+        destino:typeof Destinos[0];
 
-    launch()
-    {
-        console.log("Lanzando el cohete " + this.nombre + " con destino a " + this.destino);
+        constructor(nombre:string, precio:number)
+        {
+            this.nombre = nombre;
+            this.precio = precio;
+            this.destino = Destinos[Destinos.luna];
+        }
+
+        launch()
+        {
+            console.log("Lanzando el cohete " + this.nombre + " con destino a " + this.destino);
+        }
     }
 }
 
-//C:\TEST\pattie\LaboratorioIII\Clase11>C:\TEST\pattie\node-v12.3.1-win-x64\npm install -s @types jquery
+//npm install -g typescript
+//tsc -init
+//tsc -w
+//npm install -s @types jquery
 //tsc -out ./dist/appfull.js Destinos.ts Cohete.ts Nasa.ts Subsidiaria.ts app.ts

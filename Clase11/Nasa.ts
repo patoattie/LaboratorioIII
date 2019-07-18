@@ -1,23 +1,26 @@
-class Nasa
+namespace Espacial
 {
-    director:string;
-    creacion:number;
-    cohetes:Cohete[];
-
-    constructor(director:string, creacion:number)
+    export class Nasa
     {
-        this.director = director;
-        this.creacion = creacion;
-        this.cohetes = [];
-    }
+        director:string;
+        creacion:number;
+        cohetes:Cohete[];
 
-    agregarCohete(rocket:Cohete)
-    {
-        this.cohetes.push(rocket);
-    }
+        constructor(director:string, creacion:number)
+        {
+            this.director = director;
+            this.creacion = creacion;
+            this.cohetes = [];
+        }
 
-    lanzarCohete(rocket:Cohete)
-    {
-        rocket.launch();
+        agregarCohete(rocket:Cohete)
+        {
+            this.cohetes.push(rocket);
+        }
+
+        lanzarCohete(rocket:Cohete)
+        {
+            rocket.launch();
+        }
     }
 }

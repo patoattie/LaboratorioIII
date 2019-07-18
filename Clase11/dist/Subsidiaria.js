@@ -11,12 +11,16 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var Subsidiaria = /** @class */ (function (_super) {
-    __extends(Subsidiaria, _super);
-    function Subsidiaria(director, creacion, nombre) {
-        var _this = _super.call(this, director, creacion) || this;
-        _this.nombre = nombre;
-        return _this;
-    }
-    return Subsidiaria;
-}(Nasa));
+var Espacial;
+(function (Espacial) {
+    var Subsidiaria = /** @class */ (function (_super) {
+        __extends(Subsidiaria, _super);
+        function Subsidiaria(director, creacion, nombre) {
+            var _this = _super.call(this, director, creacion) || this;
+            _this.nombre = nombre;
+            return _this;
+        }
+        return Subsidiaria;
+    }(Espacial.Nasa));
+    Espacial.Subsidiaria = Subsidiaria;
+})(Espacial || (Espacial = {}));
