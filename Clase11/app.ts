@@ -12,3 +12,9 @@ function f1(a:number, b:string):string
 let unaFuncion:(number, string)=>string;
 
 unaFuncion = f1;
+
+//npm install -g typescript
+//tsc --init
+//tsc -w
+//npm install -s @types jquery
+//tsc --outFile ./dist/appfull.js Destinos.ts Cohete.ts Nasa.ts Subsidiaria.ts app.ts
